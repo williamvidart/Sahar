@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dome Matarazzo — Sahar Curation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ─────────────────────────────────────────────────────────
+   DOME MATARAZZO — ARCHITECTURAL PORTFOLIO PITCH
+   Sahar Curation × Cidade Matarazzo
+───────────────────────────────────────────────────────── */
+
+:root {
+  --forest-black: #0F1410;
+  --forest-deep: #0A0E0B;
+  --pearl: #EDE8DE;
+  --pearl-warm: #E5DFD2;
+  --sage: #94A78D;
+  --sand: #C8B49A;
+  --teal-persian: #2C5F5D;
+  --text-on-dark: #F5F1E8;
+  --text-on-dark-mute: #B8B0A0;
+  --text-on-light: #1A1F1B;
+  --text-on-light-mute: #5C5F58;
+  --hairline-dark: rgba(245, 241, 232, 0.12);
+  --hairline-light: rgba(26, 31, 27, 0.12);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cinema: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --serif: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--forest-black);
+  font-family: var(--sans);
+  color: var(--text-on-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--sage); color: var(--forest-black); }
+
+/* ─────────── STAGE ─────────── */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.8s var(--ease-cinema), visibility 0s linear 0.8s;
+  background: var(--forest-black);
+  z-index: 1;
+}
+
+.scene[data-mood="light"] { background: var(--pearl); color: var(--text-on-light); }
+.scene[data-mood="image"] { background: var(--forest-deep); }
+
+.scene.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 1.2s var(--ease-cinema), visibility 0s linear;
+  z-index: 2;
+}
+
+.scene-inner {
+  position: relative;
+  width: min(1320px, 92vw);
+  max-height: 90vh;
+  padding: 0 4vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 3;
+}
+
+.scene-inner[data-align="center"] { align-items: center; text-align: center; }
+.scene-inner[data-align="right"] { align-items: flex-end; text-align: right; }
+
+/* ─────────── MIST LAYER ─────────── */
+
+.mist-stage {
+  position: fixed;
+  inset: -10vmax;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+
+.mist {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 1.6s var(--ease-soft);
+}
+
+.mist--1 {
+  top: -20vmax; left: -25vmax;
+  background: radial-gradient(circle, rgba(148, 167, 141, 0.16) 0%, rgba(148, 167, 141, 0) 65%);
+  animation: drift-1 60s linear infinite;
+}
+.mist--2 {
+  top: 20vmax; right: -30vmax;
+  background: radial-gradient(circle, rgba(200, 180, 154, 0.12) 0%, rgba(200, 180, 154, 0) 65%);
+  animation: drift-2 80s linear infinite;
+}
+.mist--3 {
+  bottom: -30vmax; left: 10vmax;
+  background: radial-gradient(circle, rgba(44, 95, 93, 0.14) 0%, rgba(44, 95, 93, 0) 65%);
+  animation: drift-3 100s linear infinite;
+}
+
+.is-running .mist { opacity: 0.7; }
+.is-transitioning .mist { opacity: 1; transition: opacity 0.4s var(--ease-cinema); }
+
+@keyframes drift-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(15vmax, 8vmax) scale(1.12); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes drift-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-18vmax, 12vmax) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes drift-3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(12vmax, -10vmax) scale(1.18); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.is-light-active .mist--1 { opacity: 0.5; }
+.is-light-active .mist--2 { opacity: 0.4; }
+.is-light-active .mist--3 { opacity: 0.45; }
+
+/* ─────────── TRANSITION VEIL ─────────── */
+
+.veil {
+  position: fixed;
+  inset: 0;
+  background: var(--forest-deep);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 100;
+  transition: opacity 0.5s var(--ease-cinema);
+}
+
+.veil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.4 0'/></filter><rect width='1200' height='800' filter='url(%23n)'/></svg>");
+  background-size: cover;
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
+
+.is-transitioning .veil { opacity: 1; }
+
+/* ─────────── HUD ─────────── */
+
+.hud-top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 28px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 200;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-mute);
+  opacity: 0;
+  transition: opacity 1s var(--ease-soft);
+  pointer-events: none;
+}
+
+.is-running .hud-top { opacity: 1; }
+body[data-current-mood="light"] .hud-top { color: var(--text-on-light-mute); }
+
+.hud-mark { display: flex; align-items: center; gap: 12px; }
+.hud-mark-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--sage); }
+.hud-progress { display: flex; align-items: center; gap: 16px; }
+.hud-progress-counter { font-variant-numeric: tabular-nums; }
+.hud-progress-title { opacity: 0.7; }
+
+.hud-bottom {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s var(--ease-soft);
+}
+
+.is-running .hud-bottom { opacity: 1; }
+
+.hud-hint {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-mute);
+}
+
+body[data-current-mood="light"] .hud-hint { color: var(--text-on-light-mute); }
+
+.hud-pathways { display: flex; gap: 16px; pointer-events: auto; }
+
+.path-trigger {
+  background: transparent;
+  border: 1px solid var(--hairline-dark);
+  color: var(--text-on-dark);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-soft);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+body[data-current-mood="light"] .path-trigger {
+  border-color: var(--hairline-light);
+  color: var(--text-on-light);
+}
+
+.path-trigger:hover {
+  background: var(--sage);
+  color: var(--forest-black);
+  border-color: var(--sage);
+  letter-spacing: 0.26em;
+}
+
+.path-trigger[data-pathway="back"] { display: none; }
+body[data-in-pathway="true"] .path-trigger:not([data-pathway="back"]) { display: none; }
+body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─────────── REVEAL PRIMITIVES ─────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1.4s var(--ease-out-expo), transform 1.4s var(--ease-out-expo);
+}
+
+.scene.is-active .reveal { opacity: 1; transform: translateY(0); }
+.scene.is-active .reveal[data-delay="100"] { transition-delay: 0.1s; }
+.scene.is-active .reveal[data-delay="200"] { transition-delay: 0.25s; }
+.scene.is-active .reveal[data-delay="300"] { transition-delay: 0.4s; }
+.scene.is-active .reveal[data-delay="400"] { transition-delay: 0.55s; }
+.scene.is-active .reveal[data-delay="500"] { transition-delay: 0.7s; }
+.scene.is-active .reveal[data-delay="600"] { transition-delay: 0.85s; }
+.scene.is-active .reveal[data-delay="700"] { transition-delay: 1.0s; }
+
+.mask-line { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.mask-line > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.4s var(--ease-out-expo);
+}
+.scene.is-active .mask-line > span { transform: translateY(0); }
+.scene.is-active .mask-line[data-delay="100"] > span { transition-delay: 0.1s; }
+.scene.is-active .mask-line[data-delay="200"] > span { transition-delay: 0.25s; }
+.scene.is-active .mask-line[data-delay="300"] > span { transition-delay: 0.4s; }
+.scene.is-active .mask-line[data-delay="400"] > span { transition-delay: 0.55s; }
+
+/* ─────────── TYPOGRAPHY ─────────── */
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 28px;
+}
+
+[data-mood="light"] .eyebrow { color: var(--teal-persian); }
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(60px, 9vw, 140px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.title-md {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+}
+
+.title-sm {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.15;
+}
+
+.quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.2;
+}
+
+.body-lg {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+  max-width: 56ch;
+}
+
+.body-md {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  max-width: 60ch;
+}
+
+.label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.spec {
+  font-family: "SF Mono", "Menlo", "Monaco", monospace;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark-mute);
+}
+
+[data-mood="light"] .spec { color: var(--text-on-light-mute); }
+
+.accent { color: var(--sage); }
+.accent-sand { color: var(--sand); }
+.accent-teal { color: var(--teal-persian); }
+.mute-dark { color: var(--text-on-dark-mute); }
+.mute-light { color: var(--text-on-light-mute); }
+
+/* ─────────── PHOTO ZONES ─────────── */
+
+.photo-zone {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1f1b 0%, #0f1410 100%);
+}
+
+.photo-zone img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.6s var(--ease-out-expo);
+}
+
+.scene.is-active .photo-zone img.loaded {
+  opacity: 1;
+  animation: ken-burns 18s var(--ease-soft) forwards;
+}
+
+@keyframes ken-burns {
+  0%   { transform: scale(1.04) translate(0, 0); }
+  100% { transform: scale(1.10) translate(-0.8%, -1%); }
+}
+
+.photo-zone--full {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.photo-zone--full::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15,20,16,0.55) 0%, rgba(15,20,16,0.10) 40%, rgba(15,20,16,0.65) 100%);
+  pointer-events: none;
+}
+
+.photo-zone--clean::after { display: none; }
+.photo-zone--soft::after {
+  background: linear-gradient(180deg, rgba(15,20,16,0.20) 0%, rgba(15,20,16,0.0) 30%, rgba(15,20,16,0.35) 100%);
+}
+
+/* ─────────── VIDEO ZONES ─────────── */
+
+.video-zone {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--forest-deep);
+  overflow: hidden;
+}
+
+.video-zone video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-out-expo);
+}
+
+.scene.is-active .video-zone video { opacity: 1; }
+
+.video-zone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15,20,16,0.45) 0%, rgba(15,20,16,0.0) 30%, rgba(15,20,16,0.65) 100%);
+  pointer-events: none;
+}
+
+.video-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  z-index: 4;
+  opacity: 0.85;
+}
+
+.video-indicator-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--sage);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50%      { opacity: 1; transform: scale(1.2); }
+}
+
+/* ─────────── ARCHITECTURE CALLOUTS ON PHOTO ─────────── */
+
+.arch-callout {
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  font-family: var(--sans);
+  color: var(--text-on-dark);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+.arch-callout-bl {
+  bottom: 60px;
+  left: 60px;
+  max-width: 380px;
+}
+
+.arch-callout-br {
+  bottom: 60px;
+  right: 60px;
+  text-align: right;
+  max-width: 380px;
+}
+
+.arch-callout-tl {
+  top: 80px;
+  left: 60px;
+  max-width: 380px;
+}
+
+.arch-callout .label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--sand);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.arch-callout .title-sm {
+  color: var(--text-on-dark);
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.arch-callout .body-md {
+  color: var(--text-on-dark);
+  opacity: 0.92;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ─────────── DATA / SPECS GRID ─────────── */
+
+.specs-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  width: 100%;
+  border-top: 1px solid var(--hairline-dark);
+  margin-top: 48px;
+}
+
+[data-mood="light"] .specs-row { border-color: var(--hairline-light); }
+
+.spec-cell {
+  padding: 24px 24px 24px 0;
+  border-right: 1px solid var(--hairline-dark);
+}
+
+[data-mood="light"] .spec-cell { border-color: var(--hairline-light); }
+.spec-cell:last-child { border-right: none; padding-right: 0; }
+
+.spec-cell .label {
+  color: var(--text-on-dark-mute);
+  margin-bottom: 12px;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+}
+
+[data-mood="light"] .spec-cell .label { color: var(--text-on-light-mute); }
+
+.spec-cell .spec-value {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.1;
+}
+
+/* ─────────── COVER ─────────── */
+
+.cover-mark {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  margin-bottom: clamp(32px, 5vh, 64px);
+  color: var(--sage);
+}
+
+.cover-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(72px, 12vw, 200px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.cover-title em { font-style: italic; color: var(--sand); }
+
+.cover-subtitle {
+  font-family: var(--sans);
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-mute);
+  margin-top: clamp(32px, 5vh, 64px);
+}
+
+/* ─────────── PROMPT SCREEN ─────────── */
+
+.prompt-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--forest-deep);
+  z-index: 1000;
+  transition: opacity 1.2s var(--ease-cinema), visibility 0s linear 1.2s;
+}
+
+.prompt-screen.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.prompt-mark {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 24px;
+}
+
+.prompt-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  margin-bottom: 56px;
+  letter-spacing: -0.02em;
+}
+
+.prompt-action {
+  background: transparent;
+  border: 1px solid var(--hairline-dark);
+  color: var(--text-on-dark);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  cursor: pointer;
+  transition: all 0.5s var(--ease-soft);
+  border-radius: 999px;
+}
+
+.prompt-action:hover {
+  background: var(--sage);
+  color: var(--forest-deep);
+  border-color: var(--sage);
+  letter-spacing: 0.36em;
+}
+
+.prompt-hint {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-mute);
+  margin-top: 56px;
+  opacity: 0.6;
+}
+
+/* ─────────── ELEMENT GRID (architectural elements) ─────────── */
+
+.element-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  width: 100%;
+  align-items: start;
+}
+
+.element-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 16px;
+}
+
+[data-mood="light"] .element-label { color: var(--teal-persian); }
+
+.element-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+.element-body {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  letter-spacing: 0.005em;
+  color: var(--text-on-dark);
+  max-width: 42ch;
+}
+
+[data-mood="light"] .element-body { color: var(--text-on-light); }
+
+/* ─────────── DIPTYCH ─────────── */
+
+.diptych {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: 100vh;
+  gap: 0;
+}
+
+.diptych .photo-zone { width: 100%; height: 100%; position: relative; }
+
+.diptych-caption {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  z-index: 4;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
+
+/* ─────────── BIFURCATION PATHWAYS ─────────── */
+
+.path-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: min(960px, 88vw);
+  margin-top: 56px;
+}
+
+.path-card {
+  text-align: left;
+  background: transparent;
+  border: 1px solid var(--hairline-light);
+  color: var(--text-on-light);
+  font-family: var(--sans);
+  padding: 32px 36px;
+  cursor: pointer;
+  transition: all 0.6s var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.path-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--forest-black);
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease-out-expo);
+  z-index: 0;
+}
+
+.path-card:hover::before { transform: translateY(0); }
+.path-card:hover { color: var(--text-on-dark); border-color: var(--forest-black); }
+.path-card > * { position: relative; z-index: 1; }
+
+.path-card-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--teal-persian);
+  margin-bottom: 24px;
+  transition: color 0.6s var(--ease-out-expo);
+}
+
+.path-card:hover .path-card-num { color: var(--sand); }
+
+.path-card-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 2.2vw, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+.path-card-desc {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+/* ─────────── MISC ─────────── */
+
+.row {
+  display: flex;
+  gap: 48px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.col { display: flex; flex-direction: column; }
+
+.stack-sm > * + * { margin-top: 12px; }
+.stack-md > * + * { margin-top: 24px; }
+.stack-lg > * + * { margin-top: 48px; }
+
+.section-mark {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-mute);
+}
+
+[data-mood="light"] .section-mark { color: var(--text-on-light-mute); }
+
+.section-mark-line {
+  width: 28px;
+  height: 1px;
+  background: var(--sage);
+}
+
+.divider-soft {
+  width: 56px;
+  height: 1px;
+  background: var(--sage);
+  margin: 24px 0;
+}
+
+[data-mood="light"] .divider-soft { background: var(--teal-persian); }
+
+.pathway-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--hairline-dark);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 24px;
+}
+
+[data-mood="light"] .pathway-tag {
+  border-color: var(--hairline-light);
+  color: var(--teal-persian);
+}
+
+.portrait-frame {
+  position: relative;
+  width: clamp(280px, 28vw, 420px);
+  aspect-ratio: 3/4;
+}
+
+.operator-hint {
+  position: fixed;
+  bottom: 4px;
+  right: 4px;
+  font-family: "SF Mono", monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.15);
+  z-index: 999;
+  pointer-events: none;
+}
+
+.milestones {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  margin-top: 32px;
+  border-top: 1px solid var(--hairline-light);
+}
+
+.milestone {
+  padding: 24px 32px 24px 0;
+  border-right: 1px solid var(--hairline-light);
+  position: relative;
+}
+
+.milestone:last-child { border-right: none; }
+
+.milestone::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  background: var(--teal-persian);
+  border-radius: 50%;
+}
+
+.milestone-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--teal-persian);
+  margin-bottom: 12px;
+}
+
+.milestone-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.milestone-desc {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text-on-light-mute);
+}
+
+.variants {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.variant {
+  border-top: 1px solid var(--hairline-dark);
+  padding-top: 20px;
+}
+
+[data-mood="light"] .variant { border-color: var(--hairline-light); }
+
+.variant-tag {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 12px;
+}
+
+[data-mood="light"] .variant-tag { color: var(--teal-persian); }
+
+.variant-name {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.variant-body {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+/* "Inheritance" diagram for missing-piece scene */
+
+.inheritance {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--hairline-dark);
+  margin-top: 40px;
+  width: 100%;
+}
+
+[data-mood="light"] .inheritance { background: var(--hairline-light); }
+
+.inheritance-cell {
+  padding: 28px 24px;
+  background: var(--forest-black);
+}
+
+[data-mood="light"] .inheritance-cell { background: var(--pearl); }
+
+.inheritance-cell .label {
+  color: var(--text-on-dark-mute);
+  margin-bottom: 12px;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+}
+
+[data-mood="light"] .inheritance-cell .label { color: var(--text-on-light-mute); }
+
+.inheritance-cell .inheritance-name {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+.inheritance-cell .inheritance-by {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--text-on-dark-mute);
+}
+
+[data-mood="light"] .inheritance-cell .inheritance-by { color: var(--text-on-light-mute); }
+
+.inheritance-missing {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 2px solid var(--sand);
+  width: 100%;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ───────── PROMPT SCREEN ───────── -->
+<div class="prompt-screen" id="prompt">
+  <div class="prompt-mark">Sahar Curation × Cidade Matarazzo</div>
+  <h1 class="prompt-title">Dome Matarazzo</h1>
+  <button class="prompt-action" id="start-btn">Iniciar apresentação</button>
+  <div class="prompt-hint">← → para navegar · A B C D para pathways · Esc para sair</div>
+</div>
+
+<!-- ───────── MIST LAYER ───────── -->
+<div class="mist-stage" aria-hidden="true">
+  <div class="mist mist--1"></div>
+  <div class="mist mist--2"></div>
+  <div class="mist mist--3"></div>
+</div>
+
+<!-- ───────── TRANSITION VEIL ───────── -->
+<div class="veil" id="veil"></div>
+
+<!-- ───────── STAGE ───────── -->
+<div class="stage" id="stage">
+
+  <!-- ═══════════ COVER ═══════════ -->
+  <section class="scene" data-scene="cover" data-mood="dark" data-title="Capa">
+    <div class="scene-inner" data-align="center">
+      <div class="cover-mark reveal" data-delay="100">Sahar Curation × Cidade Matarazzo</div>
+      <h1 class="cover-title">
+        <span class="mask-line" data-delay="200"><span>Dome</span></span><br/>
+        <span class="mask-line" data-delay="300"><span><em>Matarazzo</em></span></span>
+      </h1>
+      <div class="cover-subtitle reveal" data-delay="500">Templo sonoro · proposta arquitetônica</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ A PROPOSTA ═══════════ -->
+  <section class="scene" data-scene="proposta" data-mood="dark" data-title="A proposta">
+    <div class="scene-inner" data-align="left">
+      <div class="section-mark reveal">
+        <span class="section-mark-line"></span>
+        <span>A proposta</span>
+      </div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 40px; max-width: 24ch;">
+        Um instrumento arquitetônico<br/>
+        de cura sonora<br/>
+        <span class="accent-sand">dentro da Cidade Matarazzo.</span>
+      </h2>
+      <p class="body-lg reveal" data-delay="500" style="margin-top: 48px; color: var(--text-on-dark-mute);">
+        Não um programa de hotelaria. Não uma instalação cultural temporária.<br/>
+        Uma peça construída — autônoma, com presença própria — que completa o conjunto.
+      </p>
+      <div class="specs-row reveal" data-delay="700">
+        <div class="spec-cell">
+          <div class="label">Tipologia</div>
+          <div class="spec-value">Templo sonoro</div>
+        </div>
+        <div class="spec-cell">
+          <div class="label">Capacidade</div>
+          <div class="spec-value">20 pessoas</div>
+        </div>
+        <div class="spec-cell">
+          <div class="label">Diâmetro</div>
+          <div class="spec-value">12–15 m</div>
+        </div>
+        <div class="spec-cell">
+          <div class="label">Altura</div>
+          <div class="spec-value">8–10 m</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ A LINGUAGEM ESCOLHIDA ═══════════ -->
+  <section class="scene" data-scene="linguagem" data-mood="light" data-title="A linguagem escolhida">
+    <div class="scene-inner" data-align="left">
+      <div class="section-mark reveal">
+        <span class="section-mark-line"></span>
+        <span>A linguagem escolhida</span>
+      </div>
+      <h2 class="hero-title reveal" data-delay="200" style="margin-top: 24px; font-size: clamp(72px, 11vw, 180px);">
+        <em>Azulik.</em>
+      </h2>
+      <p class="title-sm reveal" data-delay="400" style="margin-top: 32px; max-width: 42ch;">
+        Eduardo Neira — <em>Roth</em>. Tulum, México.<br/>
+        Vinte anos de prática em arquitetura têxtil,<br/>
+        formas catenárias, integração com o sítio.
+      </p>
+      <p class="body-lg reveal" data-delay="600" style="margin-top: 40px; color: var(--text-on-light-mute);">
+        Sem colunas convencionais. Cipó, concreto curado, madeira. Cada estrutura é tecida — como cesto — em diálogo direto com as árvores existentes do terreno.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════ VIDEO 1 ═══════════ -->
+  <section class="scene" data-scene="video-1" data-mood="image" data-title="Azulik · em movimento">
+    <div class="video-zone">
+      <video id="vid-1" data-src="assets/images/video-1.mp4" muted loop playsinline preload="metadata"></video>
+    </div>
+    <div class="video-indicator">
+      <span class="video-indicator-dot"></span>
+      <span>Azulik · em movimento · I</span>
+    </div>
+  </section>
+
+  <!-- ═══════════ VIDEO 2 ═══════════ -->
+  <section class="scene" data-scene="video-2" data-mood="image" data-title="Azulik · em movimento · II">
+    <div class="video-zone">
+      <video id="vid-2" data-src="assets/images/video-2.mp4" muted loop playsinline preload="metadata"></video>
+    </div>
+    <div class="video-indicator">
+      <span class="video-indicator-dot"></span>
+      <span>Azulik · em movimento · II</span>
+    </div>
+  </section>
+
+  <!-- ═══════════ DOME ARC · FULL PAGE ═══════════ -->
+  <section class="scene" data-scene="arc-main" data-mood="image" data-title="A obra · referência">
+    <div class="photo-zone photo-zone--full photo-zone--clean">
+      <img data-src="assets/images/dome-arc.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-bl">
+      <span class="label">Azulik · Tulum</span>
+      <div class="title-sm">A obra-referência.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════ O VOLUME ═══════════ -->
+  <section class="scene" data-scene="elemento-volume" data-mood="dark" data-title="Elemento I · Volume">
+    <div class="scene-inner">
+      <div class="element-grid">
+        <div class="reveal">
+          <div class="element-label">Elemento I</div>
+          <h3 class="element-title">O volume.</h3>
+          <p class="element-body">
+            Cúpula em concreto curado, geometria catenária.<br/>
+            Sem colunas internas. A massa estrutural se distribui na própria curva — como um <em>oco</em> escavado dentro da matéria, não como uma sala construída sobre o chão.
+          </p>
+          <p class="element-body" style="margin-top: 20px;">
+            O efeito acústico vem da forma: o som percorre a superfície sem ângulos retos. Cada ponto da câmara recebe a frequência com a mesma pressão.
+          </p>
+        </div>
+        <div class="reveal" data-delay="300">
+          <div class="spec" style="margin-bottom: 16px;">— Especificações</div>
+          <div class="stack-md">
+            <div>
+              <div class="label mute-dark" style="margin-bottom: 6px;">Diâmetro</div>
+              <div class="title-sm">12 a 15 metros</div>
+            </div>
+            <div>
+              <div class="label mute-dark" style="margin-bottom: 6px;">Pé-direito</div>
+              <div class="title-sm">8 a 10 metros</div>
+            </div>
+            <div>
+              <div class="label mute-dark" style="margin-bottom: 6px;">Geometria</div>
+              <div class="title-sm">Catenária · Fibonacci</div>
+            </div>
+            <div>
+              <div class="label mute-dark" style="margin-bottom: 6px;">Acústica</div>
+              <div class="title-sm">Calibração Svaram</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DOME ARC 1 · FULL PAGE ═══════════ -->
+  <section class="scene" data-scene="arc-1" data-mood="image" data-title="O óculo · aberturas">
+    <div class="photo-zone photo-zone--full photo-zone--clean">
+      <img data-src="assets/images/dome-arc-1.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-bl">
+      <span class="label">Elemento II</span>
+      <div class="title-sm">As aberturas.</div>
+      <p class="body-md">Vãos orgânicos no envoltório. Não emolduram a paisagem — convidam-na para dentro.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ DOME ARC 2 · ABERTURAS ═══════════ -->
+  <section class="scene" data-scene="arc-2" data-mood="image" data-title="A luz · o sítio">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-2.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-tl">
+      <span class="label">Elemento III</span>
+      <div class="title-sm">A luz como matéria.</div>
+      <p class="body-md">O envoltório é desenhado para receber luz oblíqua. A iluminação artificial é apenas suplemento — a estrutura segue o sol.</p>
+    </div>
+    <div class="arch-callout arch-callout-br">
+      <span class="label">Vão · forma de gota</span>
+      <p class="body-md">A abertura zenital orienta o uso ao longo do dia.<br/>A geometria — Flor da Vida — é dimensionada acusticamente.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ O MATERIAL ═══════════ -->
+  <section class="scene" data-scene="elemento-material" data-mood="light" data-title="Elemento IV · Material">
+    <div class="scene-inner">
+      <div class="element-grid">
+        <div class="reveal">
+          <div class="element-label">Elemento IV</div>
+          <h3 class="element-title">O material.</h3>
+          <p class="element-body" style="color: var(--text-on-light);">
+            Concreto curado em camadas finas, manualmente trabalhado. Cipó natural como contraponto têxtil — em superfícies internas e externas. Madeira regional brasileira no piso. Tecidos persas e indígenas em diálogo direto.
+          </p>
+          <p class="element-body" style="margin-top: 20px; color: var(--text-on-light);">
+            Continuidade direta com o vocabulário do <strong>AÔÔ</strong>, já presente na Cidade Matarazzo. A peça não se impõe — ela responde.
+          </p>
+        </div>
+        <div class="reveal" data-delay="300">
+          <div class="spec" style="margin-bottom: 16px; color: var(--text-on-light-mute);">— Camadas</div>
+          <div class="stack-md">
+            <div style="border-left: 2px solid var(--teal-persian); padding-left: 16px;">
+              <div class="label" style="color: var(--teal-persian); margin-bottom: 4px;">Estrutura</div>
+              <div class="title-sm">Concreto curado · cal viva</div>
+            </div>
+            <div style="border-left: 2px solid var(--teal-persian); padding-left: 16px;">
+              <div class="label" style="color: var(--teal-persian); margin-bottom: 4px;">Revestimento</div>
+              <div class="title-sm">Cipó natural · trançado</div>
+            </div>
+            <div style="border-left: 2px solid var(--teal-persian); padding-left: 16px;">
+              <div class="label" style="color: var(--teal-persian); margin-bottom: 4px;">Piso</div>
+              <div class="title-sm">Madeira regional</div>
+            </div>
+            <div style="border-left: 2px solid var(--teal-persian); padding-left: 16px;">
+              <div class="label" style="color: var(--teal-persian); margin-bottom: 4px;">Têxtil</div>
+              <div class="title-sm">Kilims persas · indígenas BR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DOME ARC 3 ═══════════ -->
+  <section class="scene" data-scene="arc-3" data-mood="image" data-title="O limiar · árvore">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-3.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-bl">
+      <span class="label">Elemento V · O limiar</span>
+      <div class="title-sm">Constrói-se com o sítio.<br/>Não sobre ele.</div>
+      <p class="body-md">A estrutura se tece em torno das árvores existentes. Onde há tronco, há acomodação. O envoltório segue a vegetação — não a contrário.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ DOME ARC 4 ═══════════ -->
+  <section class="scene" data-scene="arc-4" data-mood="image" data-title="A presença · escala humana">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-4.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-tl">
+      <span class="label">Elemento VI</span>
+      <div class="title-sm">A presença humana.</div>
+      <p class="body-md">A escala é negociada com o corpo. Não com o monumento.<br/>O espaço se ajusta a quem o habita.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ DOME ARC 5 ═══════════ -->
+  <section class="scene" data-scene="arc-5" data-mood="image" data-title="Continuidade · integração">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-5.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-bl">
+      <span class="label">Elemento VII</span>
+      <div class="title-sm">A continuidade.</div>
+      <p class="body-md">Não há interrupção entre o construído e o vivo.<br/>O envoltório, o piso, a vegetação — uma só matéria.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ INTERLÚDIO: O DETALHE ═══════════ -->
+  <section class="scene" data-scene="detalhes-intro" data-mood="dark" data-title="O detalhe define a obra">
+    <div class="scene-inner" data-align="center">
+      <div class="section-mark reveal" style="justify-content: center;">
+        <span class="section-mark-line"></span>
+        <span>O detalhe</span>
+        <span class="section-mark-line"></span>
+      </div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 32px; max-width: 28ch;">
+        Nesta arquitetura,<br/>
+        <em class="accent-sand">o detalhe não é decoração.</em><br/>
+        É a obra inteira.
+      </h2>
+    </div>
+  </section>
+
+  <!-- ═══════════ DETALHE 1 ═══════════ -->
+  <section class="scene" data-scene="det-1" data-mood="image" data-title="Detalhe · integração com a árvore">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-bl">
+      <span class="label">Detalhe I</span>
+      <div class="title-sm">A árvore atravessa<br/>a estrutura.</div>
+      <p class="body-md">O envoltório se molda em torno do tronco. Não há canto reto, não há "vedação".<br/>O detalhe construtivo é também o gesto poético.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ DETALHE 2 ═══════════ -->
+  <section class="scene" data-scene="det-2" data-mood="image" data-title="Detalhe · acabamento contínuo">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-tl">
+      <span class="label">Detalhe II</span>
+      <div class="title-sm">Mão humana visível.</div>
+      <p class="body-md">Toda superfície é trabalhada manualmente. Nenhuma face é industrial.<br/>A textura do tato é parte do programa.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ DETALHE 3 ═══════════ -->
+  <section class="scene" data-scene="det-3" data-mood="image" data-title="Detalhe · materialidade ancestral">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-bl">
+      <span class="label">Detalhe III</span>
+      <div class="title-sm">Memória construtiva.</div>
+      <p class="body-md">A técnica é ancestral. Maia, persa, brasileira — convergem na mesma operação: tecer em vez de empilhar.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ COMO O DOME PRECISA SENTIR ═══════════ -->
+  <section class="scene" data-scene="sentir" data-mood="light" data-title="Como o dome precisa sentir">
+    <div class="scene-inner" data-align="left">
+      <div class="section-mark reveal">
+        <span class="section-mark-line"></span>
+        <span>O que a obra precisa entregar</span>
+      </div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 32px; max-width: 28ch;">
+        Não como descrição.<br/>
+        Como <em>experiência espacial</em>.
+      </h2>
+      <div class="stack-md reveal" data-delay="400" style="margin-top: 48px; max-width: 56ch;">
+        <p class="title-sm">Quem entra <em>desacelera</em> antes de pensar.</p>
+        <p class="title-sm">O silêncio interno é <em>mais silencioso</em> que qualquer silêncio externo.</p>
+        <p class="title-sm">A primeira nota soa <em>física</em>, não decorativa.</p>
+        <p class="title-sm">Quem sai sai <em>regulado</em>. Bioquímico. Não místico.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ A PEÇA QUE FALTA NO PROGRAMA ═══════════ -->
+  <section class="scene" data-scene="peca-falta" data-mood="dark" data-title="A peça que falta no programa">
+    <div class="scene-inner" data-align="left" style="max-width: 1320px;">
+      <div class="section-mark reveal">
+        <span class="section-mark-line"></span>
+        <span>A peça que falta no programa</span>
+      </div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 32px; max-width: 28ch;">
+        A Cidade Matarazzo opera<br/>
+        hoje em <em>quatro registros construídos.</em>
+      </h2>
+
+      <div class="inheritance reveal" data-delay="400">
+        <div class="inheritance-cell">
+          <div class="label">Paisagem</div>
+          <div class="inheritance-name">A torre</div>
+          <div class="inheritance-by">Jean Nouvel</div>
+        </div>
+        <div class="inheritance-cell">
+          <div class="label">Interior</div>
+          <div class="inheritance-name">O hotel</div>
+          <div class="inheritance-by">Philippe Starck</div>
+        </div>
+        <div class="inheritance-cell">
+          <div class="label">Memória</div>
+          <div class="inheritance-name">A preservação</div>
+          <div class="inheritance-by">Modernismo italiano · 1920</div>
+        </div>
+        <div class="inheritance-cell">
+          <div class="label">Vegetal</div>
+          <div class="inheritance-name">O AÔÔ</div>
+          <div class="inheritance-by">Cipó · floresta</div>
+        </div>
+      </div>
+
+      <div class="inheritance-missing reveal" data-delay="700">
+        <div class="row" style="align-items: center; gap: 32px;">
+          <div class="col" style="flex: 1;">
+            <div class="label accent-sand" style="margin-bottom: 16px;">Ainda não escrito em volume</div>
+            <h3 class="title-md" style="font-size: clamp(36px, 4vw, 56px);">
+              O <em class="accent-sand">registro sonoro.</em>
+            </h3>
+          </div>
+          <div class="col" style="flex: 1;">
+            <p class="body-lg" style="color: var(--text-on-dark-mute);">
+              Não como ambientação. Não como serviço de spa.<br/>
+              Como <em>peça arquitetônica autônoma</em> — com presença própria, programa próprio, voz própria — dentro do conjunto.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ A CONDUÇÃO · POR QUE SAHAR ═══════════ -->
+  <section class="scene" data-scene="conducao" data-mood="light" data-title="A condução da obra">
+    <div class="scene-inner" data-align="left">
+      <div class="section-mark reveal">
+        <span class="section-mark-line"></span>
+        <span>A condução da obra</span>
+      </div>
+      <div class="row reveal" data-delay="200" style="margin-top: 40px;">
+        <div class="col" style="flex: 1.4;">
+          <h2 class="title-md" style="max-width: 22ch;">
+            Direção criativa<br/>
+            <em class="accent-teal">Sahar Farmanfarmaian.</em>
+          </h2>
+          <p class="body-lg" style="margin-top: 32px; color: var(--text-on-light);">
+            Curadora de espaços sagrados em vinte anos de prática. Autora do <strong>Noor Sanctuary</strong> em Alto Paraíso — referência regional de arquitetura ritual contemporânea.
+          </p>
+          <p class="body-lg" style="margin-top: 24px; color: var(--text-on-light-mute);">
+            Sahar opera nas interseções entre <em>geometria sagrada</em>, <em>calibração acústica</em> e <em>direção de obra</em>. Em uma única interlocução, coordena os três times — Azulik (forma), Svaram-Auroville (som), curadoria interna — sem intermediários.
+          </p>
+          <div class="specs-row" style="margin-top: 48px; border-color: var(--hairline-light);">
+            <div class="spec-cell" style="border-color: var(--hairline-light);">
+              <div class="label" style="color: var(--text-on-light-mute);">Origem</div>
+              <div class="spec-value">Qajar Dynasty · Pérsia</div>
+            </div>
+            <div class="spec-cell" style="border-color: var(--hairline-light);">
+              <div class="label" style="color: var(--text-on-light-mute);">Base</div>
+              <div class="spec-value">Alto Paraíso · 20 anos</div>
+            </div>
+            <div class="spec-cell" style="border-color: var(--hairline-light);">
+              <div class="label" style="color: var(--text-on-light-mute);">Prática</div>
+              <div class="spec-value">Altares · curadoria</div>
+            </div>
+            <div class="spec-cell" style="border-color: var(--hairline-light);">
+              <div class="label" style="color: var(--text-on-light-mute);">Rede</div>
+              <div class="spec-value">Azulik · Svaram · Auroville</div>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="flex: 1;">
+          <div class="portrait-frame photo-zone">
+            <img data-src="assets/images/16-sahar.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ A BIFURCAÇÃO ═══════════ -->
+  <section class="scene" data-scene="bifurcacao" data-mood="light" data-title="A bifurcação">
+    <div class="scene-inner" data-align="left">
+      <div class="section-mark reveal">
+        <span class="section-mark-line"></span>
+        <span>Quatro caminhos · onde aprofundar</span>
+      </div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 32px; max-width: 28ch;">
+        Aqui entrego a condução, Amber.<br/>
+        <span class="mute-light">Por onde quer entrar agora?</span>
+      </h2>
+
+      <div class="path-grid reveal" data-delay="500">
+        <button class="path-card" data-pathway-jump="A">
+          <div class="path-card-num">— A —</div>
+          <div>
+            <div class="path-card-title">Especificação<br/>construtiva.</div>
+            <div class="path-card-desc">Programa, escala, materiais, fases, abertura.</div>
+          </div>
+        </button>
+        <button class="path-card" data-pathway-jump="B">
+          <div class="path-card-num">— B —</div>
+          <div>
+            <div class="path-card-title">Por que Azulik<br/>e não outro escritório.</div>
+            <div class="path-card-desc">Complementaridade com Nouvel e Starck.</div>
+          </div>
+        </button>
+        <button class="path-card" data-pathway-jump="C">
+          <div class="path-card-num">— C —</div>
+          <div>
+            <div class="path-card-title">Variantes<br/>de execução.</div>
+            <div class="path-card-desc">Premium · paulistana · íntima.</div>
+          </div>
+        </button>
+        <button class="path-card" data-pathway-jump="D">
+          <div class="path-card-num">— D —</div>
+          <div>
+            <div class="path-card-title">Investimento<br/>e estrutura.</div>
+            <div class="path-card-desc">Ordem de grandeza · marcos · operação.</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PATHWAY A · ESPECIFICAÇÃO CONSTRUTIVA
+  ═══════════════════════════════════════════════ -->
+
+  <section class="scene" data-scene="A1" data-mood="dark" data-pathway="A" data-title="A · Programa">
+    <div class="scene-inner" data-align="left">
+      <div class="pathway-tag reveal">A · Especificação construtiva</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; max-width: 24ch;">
+        Câmara acústica única.<br/>
+        <em class="accent-sand">Vinte ocupantes por sessão.</em>
+      </h2>
+      <div class="specs-row reveal" data-delay="400">
+        <div class="spec-cell">
+          <div class="label">Volume bruto</div>
+          <div class="spec-value">~1.400 m³</div>
+        </div>
+        <div class="spec-cell">
+          <div class="label">Área de planta</div>
+          <div class="spec-value">110 a 175 m²</div>
+        </div>
+        <div class="spec-cell">
+          <div class="label">Oculus zenital</div>
+          <div class="spec-value">Ø 1,2 m</div>
+        </div>
+        <div class="spec-cell">
+          <div class="label">Aberturas laterais</div>
+          <div class="spec-value">3 a 5 vãos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="A2" data-mood="image" data-pathway="A" data-title="A · Materiais">
+    <div class="photo-zone photo-zone--full photo-zone--soft">
+      <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+    </div>
+    <div class="arch-callout arch-callout-bl">
+      <span class="label">A · Especificação de materiais</span>
+      <div class="title-sm">Quatro camadas.</div>
+      <p class="body-md"><strong>1.</strong> Estrutura: concreto curado · cal · armadura mínima.<br/><strong>2.</strong> Revestimento: cipó trançado · interno e externo.<br/><strong>3.</strong> Piso: madeira regional · estrutura flutuante.<br/><strong>4.</strong> Têxtil: kilims persas · tecidos indígenas BR.</p>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="A3" data-mood="light" data-pathway="A" data-title="A · Programação">
+    <div class="scene-inner" data-align="left">
+      <div class="eyebrow reveal accent-teal">A · Uso programado</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px;">
+        Como a obra opera no dia a dia.
+      </h2>
+      <div class="stack-md reveal" data-delay="400" style="margin-top: 40px; max-width: 64ch;">
+        <div>
+          <div class="label mute-light">Diariamente · 17h às 18h</div>
+          <p class="title-sm" style="margin-top: 6px;">Sessão aberta · entrada paga · até 20 pessoas</p>
+        </div>
+        <div>
+          <div class="label mute-light">Sob demanda</div>
+          <p class="title-sm" style="margin-top: 6px;">Privados Rosewood · via concierge integrado</p>
+        </div>
+        <div>
+          <div class="label mute-light">Calendário sazonal</div>
+          <p class="title-sm" style="margin-top: 6px;">8 a 12 eventos/ano · lua cheia · lua nova · solstícios</p>
+        </div>
+        <div>
+          <div class="label mute-light">Residências mensais</div>
+          <p class="title-sm" style="margin-top: 6px;">Musicistas internacionais · Tulåh · Auroville · Esalen</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="A4" data-mood="dark" data-pathway="A" data-title="A · Cronograma">
+    <div class="scene-inner" data-align="left">
+      <div class="eyebrow reveal">A · Fases de execução</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px;">
+        Doze meses até a inauguração.
+      </h2>
+      <div class="milestones reveal" data-delay="400" style="border-color: var(--hairline-dark); margin-top: 40px;">
+        <div class="milestone" style="border-color: var(--hairline-dark);">
+          <div class="milestone-label" style="color: var(--sand);">Fase 01 · M 0–2</div>
+          <div class="milestone-title">Projeto executivo</div>
+          <p class="milestone-desc" style="color: var(--text-on-dark-mute);">Roth · briefing · aprovações</p>
+        </div>
+        <div class="milestone" style="border-color: var(--hairline-dark);">
+          <div class="milestone-label" style="color: var(--sand);">Fase 02 · M 2–9</div>
+          <div class="milestone-title">Construção</div>
+          <p class="milestone-desc" style="color: var(--text-on-dark-mute);">Estrutura · revestimento · interior</p>
+        </div>
+        <div class="milestone">
+          <div class="milestone-label" style="color: var(--sand);">Fase 03 · M 9–12</div>
+          <div class="milestone-title">Calibração + abertura</div>
+          <p class="milestone-desc" style="color: var(--text-on-dark-mute);">Svaram · programa · noite de gala</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="A5" data-mood="dark" data-pathway="A" data-title="A · Noite de Abertura">
+    <div class="scene-inner" data-align="center">
+      <div class="eyebrow reveal accent-sand">A · Noite de abertura</div>
+      <p class="quote reveal" data-delay="200" style="max-width: 26ch; margin-top: 48px;">
+        Goharik Faraon<br/>
+        <span class="accent-sand">tocando hang drum</span><br/>
+        para trinta pessoas.
+      </p>
+      <p class="body-lg reveal" data-delay="500" style="margin-top: 48px; text-align: center;">
+        Imprensa internacional de wellness na semana seguinte.<br/>
+        <em>Architectural Digest · Wallpaper · T Magazine.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PATHWAY B · POR QUE AZULIK
+  ═══════════════════════════════════════════════ -->
+
+  <section class="scene" data-scene="B1" data-mood="light" data-pathway="B" data-title="B · Três vozes">
+    <div class="scene-inner" data-align="left">
+      <div class="pathway-tag reveal">B · Por que Azulik</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; max-width: 22ch;">
+        Não competimos com Starck.<br/>
+        Não competimos com Nouvel.<br/>
+        <em class="accent-teal">Complementamos.</em>
+      </h2>
+      <div class="inheritance reveal" data-delay="400" style="background: var(--hairline-light);">
+        <div class="inheritance-cell" style="background: var(--pearl);">
+          <div class="label" style="color: var(--text-on-light-mute);">Nouvel</div>
+          <div class="inheritance-name">A torre</div>
+          <div class="inheritance-by" style="color: var(--text-on-light-mute);">Paisagem · edifício e céu</div>
+        </div>
+        <div class="inheritance-cell" style="background: var(--pearl);">
+          <div class="label" style="color: var(--text-on-light-mute);">Starck</div>
+          <div class="inheritance-name">O interior</div>
+          <div class="inheritance-by" style="color: var(--text-on-light-mute);">Corpo · espaço · calor</div>
+        </div>
+        <div class="inheritance-cell" style="background: var(--pearl);">
+          <div class="label" style="color: var(--text-on-light-mute);">AÔÔ</div>
+          <div class="inheritance-name">A floresta</div>
+          <div class="inheritance-by" style="color: var(--text-on-light-mute);">Vegetal · cipó · ancestralidade</div>
+        </div>
+        <div class="inheritance-cell" style="background: var(--pearl);">
+          <div class="label" style="color: var(--teal-persian);">Roth</div>
+          <div class="inheritance-name" style="color: var(--teal-persian);">A soleira</div>
+          <div class="inheritance-by" style="color: var(--text-on-light-mute);">Corpo · natureza · som</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="B2" data-mood="dark" data-pathway="B" data-title="B · A frase de Roth">
+    <div class="scene-inner" data-align="center">
+      <p class="quote reveal" style="max-width: 30ch;">
+        “Em árabe, <span class="accent-sand"><em>ar</em></span> significa <em>unir</em>.<br/>
+        A arquitetura existe<br/>
+        para unir o que foi separado.”
+      </p>
+      <p class="label reveal mute-dark" data-delay="500" style="margin-top: 56px;">
+        — Eduardo "Roth" Neira · Azulik
+      </p>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="B3" data-mood="dark" data-pathway="B" data-title="B · A mesma língua">
+    <div class="diptych">
+      <div class="photo-zone photo-zone--clean">
+        <img data-src="assets/images/dome-arc-3.jpg" alt="" />
+        <div class="diptych-caption">Uh May · Tulum</div>
+      </div>
+      <div class="photo-zone photo-zone--clean">
+        <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+        <div class="diptych-caption">A mesma operação</div>
+      </div>
+    </div>
+    <div class="arch-callout" style="bottom: 48px; left: 50%; transform: translateX(-50%); text-align: center; max-width: 600px;">
+      <p class="title-sm" style="color: var(--text-on-dark);">
+        O AÔÔ já fala essa língua.<br/>
+        <span class="accent-sand">O dome dá continuidade à frase.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="B4" data-mood="light" data-pathway="B" data-title="B · A continuidade">
+    <div class="scene-inner" data-align="left">
+      <div class="eyebrow reveal accent-teal">B · A continuidade</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; max-width: 28ch;">
+        A Cidade Matarazzo começou<br/>
+        a escrever essa frase<br/>
+        <em>antes da nossa proposta chegar.</em>
+      </h2>
+      <p class="body-lg reveal" data-delay="400" style="margin-top: 32px; max-width: 64ch;">
+        Escolher Roth não é introduzir uma língua nova ao conjunto. É concluir uma frase que o próprio AÔÔ iniciou. A coerência arquitetônica entre AÔÔ e Uh May é literal — mesmo material, mesma técnica têxtil, mesma escola.
+      </p>
+      <p class="body-lg reveal" data-delay="500" style="margin-top: 24px; max-width: 64ch; color: var(--text-on-light-mute);">
+        Qualquer outro arquiteto entraria <em>falando outra língua</em> que um prédio existente do conjunto. Roth entra <em>dando sequência</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PATHWAY C · VARIANTES
+  ═══════════════════════════════════════════════ -->
+
+  <section class="scene" data-scene="C1" data-mood="light" data-pathway="C" data-title="C · Três variantes">
+    <div class="scene-inner" data-align="left">
+      <div class="pathway-tag reveal">C · Variantes de execução</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; max-width: 26ch;">
+        O mesmo programa arquitetônico.<br/>
+        <em>Três temperaturas de execução.</em>
+      </h2>
+      <div class="variants reveal" data-delay="400">
+        <div class="variant">
+          <div class="variant-tag">Variante 01 · Premium</div>
+          <div class="variant-name">Roth &amp; Svaram</div>
+          <p class="variant-body">Time do Azulik. Time do Sonorium. Atração internacional desde o dia um. <em>Fala para o mundo.</em></p>
+        </div>
+        <div class="variant">
+          <div class="variant-tag">Variante 02 · Paulistana</div>
+          <div class="variant-name">Triptyque &amp; Svaram</div>
+          <p class="variant-body">Linguagem mais limpa, mais geométrica, ancorada em SP. Mesma alma ecológica. <em>Fala para São Paulo.</em></p>
+        </div>
+        <div class="variant">
+          <div class="variant-tag">Variante 03 · Íntima</div>
+          <div class="variant-name">Bambu &amp; Artesãos</div>
+          <p class="variant-body">Bambu trabalhado por artesãos do Alto Paraíso. Pegada de carbono mínima. <em>Fala para a Mata Atlântica.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="C2" data-mood="dark" data-pathway="C" data-title="C · Recomendação">
+    <div class="scene-inner" data-align="left">
+      <div class="eyebrow reveal accent-sand">C · Recomendação técnica</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; max-width: 28ch;">
+        Recomendamos <em class="accent-sand">Variante 01</em><br/>
+        — Azulik + Svaram.
+      </h2>
+      <p class="body-lg reveal" data-delay="400" style="margin-top: 32px;">
+        Por três razões objetivas:
+      </p>
+      <div class="stack-md reveal" data-delay="500" style="margin-top: 32px; max-width: 64ch;">
+        <p class="title-sm"><em class="accent-sand">01.</em>&nbsp;&nbsp;<span style="font-weight: 300;">Continuidade arquitetônica com o AÔÔ — coerência literal.</span></p>
+        <p class="title-sm"><em class="accent-sand">02.</em>&nbsp;&nbsp;<span style="font-weight: 300;">Atração de imprensa internacional desde a abertura.</span></p>
+        <p class="title-sm"><em class="accent-sand">03.</em>&nbsp;&nbsp;<span style="font-weight: 300;">Time já operante em projeto análogo — risco técnico reduzido.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PATHWAY D · INVESTIMENTO E ESTRUTURA
+  ═══════════════════════════════════════════════ -->
+
+  <section class="scene" data-scene="D1" data-mood="light" data-pathway="D" data-title="D · Ordem de grandeza">
+    <div class="scene-inner" data-align="left">
+      <div class="pathway-tag reveal">D · Investimento e estrutura</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px;">
+        Ordem de grandeza.
+      </h2>
+      <div class="specs-row reveal" data-delay="400" style="border-color: var(--hairline-light);">
+        <div class="spec-cell" style="border-color: var(--hairline-light);">
+          <div class="label" style="color: var(--text-on-light-mute);">Variante 01 · Premium</div>
+          <div class="spec-value">≈ R$ 1.000.000</div>
+        </div>
+        <div class="spec-cell" style="border-color: var(--hairline-light);">
+          <div class="label" style="color: var(--text-on-light-mute);">Variante 02 · Paulistana</div>
+          <div class="spec-value">−30% a −40%</div>
+        </div>
+        <div class="spec-cell" style="border-color: var(--hairline-light);">
+          <div class="label" style="color: var(--text-on-light-mute);">Variante 03 · Íntima</div>
+          <div class="spec-value">Reduz mais</div>
+        </div>
+      </div>
+      <p class="body-lg reveal" data-delay="600" style="margin-top: 32px; max-width: 64ch; color: var(--text-on-light-mute);">
+        Números de ordem de grandeza — orçamento fechado depende do briefing detalhado com os três times.
+      </p>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="D2" data-mood="light" data-pathway="D" data-title="D · Curadoria">
+    <div class="scene-inner" data-align="left">
+      <div class="eyebrow reveal accent-teal">D · Direção criativa · Sahar Curation</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; font-size: clamp(48px, 7vw, 88px);">
+        <em>R$ 110.000</em>
+      </h2>
+      <p class="body-lg reveal" data-delay="400" style="margin-top: 32px; max-width: 60ch; color: var(--text-on-light-mute);">
+        Valor fixo. Cobre coordenação dos três times, curadoria do desenho interno, curadoria da programação cultural do primeiro ano, e a inauguração.
+      </p>
+      <div class="milestones reveal" data-delay="600">
+        <div class="milestone">
+          <div class="milestone-label">Marco I</div>
+          <div class="milestone-title">Assinatura</div>
+          <p class="milestone-desc">Entrada · destrava Roth e Svaram</p>
+        </div>
+        <div class="milestone">
+          <div class="milestone-label">Marco II</div>
+          <div class="milestone-title">Estrutural</div>
+          <p class="milestone-desc">Conclusão da estrutura física</p>
+        </div>
+        <div class="milestone">
+          <div class="milestone-label">Marco III</div>
+          <div class="milestone-title">Inauguração</div>
+          <p class="milestone-desc">Marco final · gala</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="D3" data-mood="dark" data-pathway="D" data-title="D · Operação">
+    <div class="scene-inner" data-align="left">
+      <div class="eyebrow reveal">D · Modelo de operação</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; max-width: 24ch;">
+        Três modelos possíveis.
+      </h2>
+      <div class="stack-md reveal" data-delay="400" style="margin-top: 40px; max-width: 60ch;">
+        <div>
+          <div class="label accent">Modelo I · Integrado</div>
+          <p class="body-lg" style="margin-top: 8px;">Operação pelo Rosewood · Sahar Curation como curadora externa anual.</p>
+        </div>
+        <div>
+          <div class="label accent">Modelo II · Independente</div>
+          <p class="body-lg" style="margin-top: 8px;">Sahar Curation opera dentro da Cidade Matarazzo · revenue share.</p>
+        </div>
+        <div>
+          <div class="label accent">Modelo III · Híbrido</div>
+          <p class="body-lg" style="margin-top: 8px;">Diárias pelo Rosewood · eventos especiais pela Sahar Curation. <em class="accent-sand">Recomendação inicial.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="D4" data-mood="light" data-pathway="D" data-title="D · Próximos passos">
+    <div class="scene-inner" data-align="left">
+      <div class="eyebrow reveal accent-teal">D · Próximos passos</div>
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px;">
+        Quatro movimentos.
+      </h2>
+      <div class="stack-md reveal" data-delay="400" style="margin-top: 40px;">
+        <p class="title-sm"><em class="accent-teal">01.</em>&nbsp;&nbsp;Briefing técnico · 2–3 semanas</p>
+        <p class="title-sm"><em class="accent-teal">02.</em>&nbsp;&nbsp;Apresentação preliminar Roth e Svaram</p>
+        <p class="title-sm"><em class="accent-teal">03.</em>&nbsp;&nbsp;Proposta detalhada · escopo, orçamento, cronograma</p>
+        <p class="title-sm"><em class="accent-teal">04.</em>&nbsp;&nbsp;Decisão e assinatura</p>
+      </div>
+      <p class="body-lg reveal" data-delay="600" style="margin-top: 48px;">
+        Fechamento da fase preliminar previsto para <em>2 de junho.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════ FECHAMENTO ═══════════ -->
+
+  <section class="scene" data-scene="close-1" data-mood="dark" data-title="Fechamento · Três palavras">
+    <div class="scene-inner" data-align="center">
+      <h2 class="hero-title reveal" data-delay="100" style="font-size: clamp(56px, 8vw, 120px);">
+        <em>Forma.</em>
+      </h2>
+      <h2 class="hero-title reveal" data-delay="300" style="font-size: clamp(56px, 8vw, 120px);">
+        <em>Som.</em>
+      </h2>
+      <h2 class="hero-title reveal" data-delay="500" style="font-size: clamp(56px, 8vw, 120px);">
+        <em class="accent-sand">Curadoria.</em>
+      </h2>
+    </div>
+  </section>
+
+  <section class="scene" data-scene="close-2" data-mood="dark" data-title="Cartão · Sahar Curation">
+    <div class="scene-inner" data-align="center">
+      <div class="cover-mark reveal" style="margin-bottom: 24px;">Obrigada pelo tempo, Amber.</div>
+      <h2 class="cover-title reveal" data-delay="200" style="font-size: clamp(48px, 7vw, 96px);">
+        Sahar Curation
+      </h2>
+      <div class="reveal" data-delay="400" style="margin-top: 40px;">
+        <div class="divider-soft" style="margin: 0 auto;"></div>
+      </div>
+      <p class="label reveal mute-dark" data-delay="500" style="margin-top: 24px;">
+        Por favor, leva o meu carinho para o Alexandre.
+      </p>
+    </div>
+  </section>
+
+</div><!-- /.stage -->
+
+<!-- ───────── HUD ───────── -->
+<nav class="hud-top" aria-hidden="true">
+  <div class="hud-mark">
+    <span class="hud-mark-dot"></span>
+    <span>Sahar Curation · Cidade Matarazzo</span>
+  </div>
+  <div class="hud-progress">
+    <span class="hud-progress-title" id="hud-title">—</span>
+    <span class="hud-progress-counter" id="hud-counter">00 / 00</span>
+  </div>
+</nav>
+
+<nav class="hud-bottom" aria-hidden="true">
+  <div class="hud-hint">← → · Espaço · Scroll</div>
+  <div class="hud-pathways">
+    <button class="path-trigger" data-pathway="A">A · Construtiva</button>
+    <button class="path-trigger" data-pathway="B">B · Azulik</button>
+    <button class="path-trigger" data-pathway="C">C · Variantes</button>
+    <button class="path-trigger" data-pathway="D">D · Investimento</button>
+    <button class="path-trigger" data-pathway="back">← Voltar à visão</button>
+  </div>
+</nav>
+
+<div class="operator-hint" id="operator-hint"></div>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const veil = document.getElementById('veil');
+  const promptScreen = document.getElementById('prompt');
+  const startBtn = document.getElementById('start-btn');
+  const hudCounter = document.getElementById('hud-counter');
+  const hudTitle = document.getElementById('hud-title');
+  const operatorHint = document.getElementById('operator-hint');
+  const pathTriggers = document.querySelectorAll('.path-trigger');
+  const pathJumps = document.querySelectorAll('[data-pathway-jump]');
+
+  const allScenes = Array.from(stage.querySelectorAll('.scene'));
+  const mainFlow = allScenes.filter(s => !s.dataset.pathway);
+  const pathways = {
+    A: allScenes.filter(s => s.dataset.pathway === 'A'),
+    B: allScenes.filter(s => s.dataset.pathway === 'B'),
+    C: allScenes.filter(s => s.dataset.pathway === 'C'),
+    D: allScenes.filter(s => s.dataset.pathway === 'D'),
+  };
+
+  let currentIndex = 0;
+  let activeSequence = mainFlow;
+  let activePathway = null;
+  let mainFlowReturnIndex = 0;
+  let isTransitioning = false;
+  const TRANSITION_LOCK_MS = 1100;
+
+  function showScene(seq, idx) {
+    if (isTransitioning) return;
+    if (idx < 0 || idx >= seq.length) return;
+
+    isTransitioning = true;
+    document.body.classList.add('is-transitioning');
+
+    setTimeout(() => {
+      allScenes.forEach(s => {
+        s.classList.remove('is-active');
+        // pause any videos in scenes we're leaving
+        s.querySelectorAll('video').forEach(v => { try { v.pause(); v.currentTime = 0; } catch(e){} });
+      });
+
+      const target = seq[idx];
+      target.classList.add('is-active');
+      currentIndex = idx;
+      activeSequence = seq;
+
+      lazyLoadMedia(target);
+      playMediaInScene(target);
+      updateHud(target);
+
+      const mood = target.dataset.mood || 'dark';
+      document.body.dataset.currentMood = mood;
+      document.body.classList.toggle('is-light-active', mood === 'light');
+
+      const pw = target.dataset.pathway;
+      if (pw) {
+        document.body.dataset.inPathway = "true";
+        activePathway = pw;
+      } else {
+        document.body.dataset.inPathway = "false";
+        activePathway = null;
+      }
+    }, 350);
+
+    setTimeout(() => {
+      document.body.classList.remove('is-transitioning');
+      isTransitioning = false;
+    }, TRANSITION_LOCK_MS);
+  }
+
+  function lazyLoadMedia(scene) {
+    // images
+    scene.querySelectorAll('img[data-src]').forEach(img => {
+      if (img.dataset.loaded) return;
+      const src = img.dataset.src;
+      const test = new Image();
+      test.onload = () => {
+        img.src = src;
+        img.classList.add('loaded');
+        img.dataset.loaded = "true";
+      };
+      test.onerror = () => {};
+      test.src = src;
+    });
+    // videos
+    scene.querySelectorAll('video[data-src]').forEach(v => {
+      if (v.dataset.loaded) return;
+      v.src = v.dataset.src;
+      v.dataset.loaded = "true";
+    });
+  }
+
+  function playMediaInScene(scene) {
+    scene.querySelectorAll('video').forEach(v => {
+      try {
+        v.currentTime = 0;
+        v.muted = true;
+        const p = v.play();
+        if (p !== undefined) p.catch(() => {});
+      } catch(e){}
+    });
+  }
+
+  function updateHud(scene) {
+    const title = scene.dataset.title || '';
+    hudTitle.textContent = title;
+
+    if (!scene.dataset.pathway) {
+      const idx = mainFlow.indexOf(scene) + 1;
+      hudCounter.textContent = String(idx).padStart(2, '0') + ' / ' + String(mainFlow.length).padStart(2, '0');
+    } else {
+      const pw = scene.dataset.pathway;
+      const pwScenes = pathways[pw];
+      const idx = pwScenes.indexOf(scene) + 1;
+      hudCounter.textContent = pw + ' · ' + String(idx).padStart(2, '0') + ' / ' + String(pwScenes.length).padStart(2, '0');
+    }
+    operatorHint.textContent = `[${scene.dataset.scene}]`;
+  }
+
+  function next() {
+    if (isTransitioning) return;
+    if (currentIndex < activeSequence.length - 1) {
+      showScene(activeSequence, currentIndex + 1);
+    } else if (activePathway) {
+      returnToMain();
+    }
+  }
+
+  function prev() {
+    if (isTransitioning) return;
+    if (currentIndex > 0) {
+      showScene(activeSequence, currentIndex - 1);
+    } else if (activePathway) {
+      returnToMain();
+    }
+  }
+
+  function jumpToPathway(letter) {
+    if (!pathways[letter] || pathways[letter].length === 0) return;
+    if (!activePathway) {
+      mainFlowReturnIndex = currentIndex;
+    }
+    showScene(pathways[letter], 0);
+  }
+
+  function returnToMain() {
+    showScene(mainFlow, mainFlowReturnIndex);
+  }
+
+  startBtn.addEventListener('click', () => {
+    promptScreen.classList.add('is-hidden');
+    document.body.classList.add('is-running');
+    setTimeout(() => { showScene(mainFlow, 0); }, 300);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (!promptScreen.classList.contains('is-hidden')) {
+      if (e.key === 'Enter' || e.key === ' ') startBtn.click();
+      return;
+    }
+    switch (e.key) {
+      case 'ArrowRight':
+      case ' ':
+      case 'PageDown':
+        e.preventDefault(); next(); break;
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault(); prev(); break;
+      case 'p': case 'P': {
+        const bifIdx = mainFlow.findIndex(s => s.dataset.scene === 'bifurcacao');
+        if (bifIdx >= 0) showScene(mainFlow, bifIdx);
+        break;
+      }
+      case 'Home': showScene(mainFlow, 0); break;
+      case 'End':  showScene(mainFlow, mainFlow.length - 1); break;
+      case 'a': case 'A': jumpToPathway('A'); break;
+      case 'b': case 'B': jumpToPathway('B'); break;
+      case 'c': case 'C': jumpToPathway('C'); break;
+      case 'd': case 'D': jumpToPathway('D'); break;
+      case 'Escape':
+        if (activePathway) returnToMain();
+        break;
+    }
+  });
+
+  let scrollTimeout = null;
+  window.addEventListener('wheel', (e) => {
+    if (!promptScreen.classList.contains('is-hidden')) return;
+    if (isTransitioning) return;
+    if (scrollTimeout) return;
+    if (Math.abs(e.deltaY) < 30) return;
+    if (e.deltaY > 0) next(); else prev();
+    scrollTimeout = setTimeout(() => { scrollTimeout = null; }, 800);
+  }, { passive: true });
+
+  stage.addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    if (e.target.closest('.path-trigger')) return;
+    if (e.target.closest('.path-card')) return;
+    next();
+  });
+
+  pathTriggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const pw = btn.dataset.pathway;
+      if (pw === 'back') returnToMain();
+      else jumpToPathway(pw);
+    });
+  });
+
+  pathJumps.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      jumpToPathway(btn.dataset.pathwayJump);
+    });
+  });
+
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  updateHud(mainFlow[0]);
+})();
+</script>
+
+</body>
+</html>
