@@ -395,7 +395,161 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
 .mute-dark { color: var(--text-on-dark-mute); }
 .mute-light { color: var(--text-on-light-mute); }
 
-/* ─────────── PHOTO ZONES ─────────── */
+/* ─────────── BLURRED BG + CONTAINED CARD ─────────── */
+
+.scene-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.scene-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.18);
+  transition: opacity 1.8s var(--ease-out-expo);
+  filter: blur(48px) brightness(0.42) saturate(0.85);
+  will-change: transform, opacity;
+}
+
+.scene.is-active .scene-bg img.loaded {
+  opacity: 1;
+  animation: kb-bg 28s var(--ease-soft) forwards;
+}
+
+@keyframes kb-bg {
+  0%   { transform: scale(1.18) translate(0, 0); }
+  100% { transform: scale(1.32) translate(-1.5%, -1%); }
+}
+
+.scene-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15,20,16,0.35) 0%, rgba(15,20,16,0.0) 40%, rgba(15,20,16,0.55) 100%);
+  z-index: 1;
+}
+
+.photo-split {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(48px, 6vw, 96px);
+  width: 100%;
+  align-items: center;
+}
+
+.photo-card {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--forest-deep);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.75), 0 0 0 1px rgba(245, 241, 232, 0.06);
+}
+
+.photo-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1.6s var(--ease-out-expo);
+}
+
+.scene.is-active .photo-card img.loaded {
+  opacity: 1;
+  animation: kb-card 20s var(--ease-soft) forwards;
+}
+
+@keyframes kb-card {
+  0%   { transform: scale(1.04) translate(0, 0); }
+  100% { transform: scale(1.12) translate(-0.8%, -1%); }
+}
+
+.photo-meta {
+  display: flex;
+  flex-direction: column;
+  max-width: 38ch;
+}
+
+.photo-meta .label-elem {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 20px;
+}
+
+.photo-meta .title-elem {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 3.6vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+  margin-bottom: 24px;
+  color: var(--text-on-dark);
+}
+
+.photo-meta .body-elem {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.7;
+  letter-spacing: 0.005em;
+  color: var(--text-on-dark);
+  opacity: 0.92;
+}
+
+[data-mood="light"] .photo-meta .label-elem { color: var(--teal-persian); }
+[data-mood="light"] .photo-meta .title-elem { color: var(--text-on-light); }
+[data-mood="light"] .photo-meta .body-elem { color: var(--text-on-light); opacity: 1; }
+
+.photo-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 2.5vw, 40px);
+  width: 100%;
+  max-width: 1100px;
+}
+
+.photo-duo .photo-card { max-width: none; aspect-ratio: 3 / 4; }
+
+.photo-duo-caption {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 40px;
+  z-index: 3;
+}
+
+.photo-card-tag {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  background: rgba(15, 20, 16, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 6px 10px;
+  border-radius: 2px;
+  z-index: 2;
+}
+
+/* ─────────── PHOTO ZONES (full-bleed for principal + videos) ─────────── */
 
 .photo-zone {
   position: relative;
@@ -1234,31 +1388,41 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
     </div>
   </section>
 
-  <!-- ═══════════ DOME ARC 1 · FULL PAGE ═══════════ -->
+  <!-- ═══════════ DOME ARC 1 · As aberturas ═══════════ -->
   <section class="scene" data-scene="arc-1" data-mood="image" data-title="O óculo · aberturas">
-    <div class="photo-zone photo-zone--full photo-zone--clean">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-1.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-bl">
-      <span class="label">Elemento II</span>
-      <div class="title-sm">As aberturas.</div>
-      <p class="body-md">Vãos orgânicos no envoltório. Não emolduram a paisagem — convidam-na para dentro.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-1.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Elemento II</span>
+          <div class="title-elem">As aberturas.</div>
+          <p class="body-elem">Vãos orgânicos no envoltório. Não emolduram a paisagem — convidam-na para dentro. O envoltório negocia com o exterior como pele, não como parede.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════ DOME ARC 2 · ABERTURAS ═══════════ -->
+  <!-- ═══════════ DOME ARC 2 · A luz ═══════════ -->
   <section class="scene" data-scene="arc-2" data-mood="image" data-title="A luz · o sítio">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-2.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-tl">
-      <span class="label">Elemento III</span>
-      <div class="title-sm">A luz como matéria.</div>
-      <p class="body-md">O envoltório é desenhado para receber luz oblíqua. A iluminação artificial é apenas suplemento — a estrutura segue o sol.</p>
-    </div>
-    <div class="arch-callout arch-callout-br">
-      <span class="label">Vão · forma de gota</span>
-      <p class="body-md">A abertura zenital orienta o uso ao longo do dia.<br/>A geometria — Flor da Vida — é dimensionada acusticamente.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-2.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Elemento III</span>
+          <div class="title-elem">A luz como matéria.</div>
+          <p class="body-elem">O envoltório é desenhado para receber luz oblíqua. A iluminação artificial é apenas suplemento — a estrutura segue o sol. A abertura zenital orienta o uso ao longo do dia; a geometria (Flor da Vida) é dimensionada acusticamente.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1301,39 +1465,60 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
     </div>
   </section>
 
-  <!-- ═══════════ DOME ARC 3 ═══════════ -->
+  <!-- ═══════════ DOME ARC 3 · Limiar ═══════════ -->
   <section class="scene" data-scene="arc-3" data-mood="image" data-title="O limiar · árvore">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-3.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-bl">
-      <span class="label">Elemento V · O limiar</span>
-      <div class="title-sm">Constrói-se com o sítio.<br/>Não sobre ele.</div>
-      <p class="body-md">A estrutura se tece em torno das árvores existentes. Onde há tronco, há acomodação. O envoltório segue a vegetação — não a contrário.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-3.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Elemento V · O limiar</span>
+          <div class="title-elem">Constrói-se com o sítio.<br/>Não sobre ele.</div>
+          <p class="body-elem">A estrutura se tece em torno das árvores existentes. Onde há tronco, há acomodação. O envoltório segue a vegetação — nunca o contrário.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════ DOME ARC 4 ═══════════ -->
+  <!-- ═══════════ DOME ARC 4 · Escala humana ═══════════ -->
   <section class="scene" data-scene="arc-4" data-mood="image" data-title="A presença · escala humana">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-4.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-tl">
-      <span class="label">Elemento VI</span>
-      <div class="title-sm">A presença humana.</div>
-      <p class="body-md">A escala é negociada com o corpo. Não com o monumento.<br/>O espaço se ajusta a quem o habita.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-4.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Elemento VI</span>
+          <div class="title-elem">A presença humana.</div>
+          <p class="body-elem">A escala é negociada com o corpo, não com o monumento. O espaço se ajusta a quem o habita — a proporção é íntima, contemplativa.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════ DOME ARC 5 ═══════════ -->
+  <!-- ═══════════ DOME ARC 5 · Continuidade ═══════════ -->
   <section class="scene" data-scene="arc-5" data-mood="image" data-title="Continuidade · integração">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-5.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-bl">
-      <span class="label">Elemento VII</span>
-      <div class="title-sm">A continuidade.</div>
-      <p class="body-md">Não há interrupção entre o construído e o vivo.<br/>O envoltório, o piso, a vegetação — uma só matéria.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-5.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Elemento VII</span>
+          <div class="title-elem">A continuidade.</div>
+          <p class="body-elem">Não há interrupção entre o construído e o vivo. O envoltório, o piso, a vegetação — uma só matéria, sem hierarquia.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1353,39 +1538,60 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
     </div>
   </section>
 
-  <!-- ═══════════ DETALHE 1 ═══════════ -->
+  <!-- ═══════════ DETALHE 1 · Árvore ═══════════ -->
   <section class="scene" data-scene="det-1" data-mood="image" data-title="Detalhe · integração com a árvore">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-det.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-bl">
-      <span class="label">Detalhe I</span>
-      <div class="title-sm">A árvore atravessa<br/>a estrutura.</div>
-      <p class="body-md">O envoltório se molda em torno do tronco. Não há canto reto, não há "vedação".<br/>O detalhe construtivo é também o gesto poético.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Detalhe I</span>
+          <div class="title-elem">A árvore atravessa a estrutura.</div>
+          <p class="body-elem">O envoltório se molda em torno do tronco. Não há canto reto, não há "vedação". O detalhe construtivo é também o gesto poético.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════ DETALHE 2 ═══════════ -->
+  <!-- ═══════════ DETALHE 2 · Mão humana ═══════════ -->
   <section class="scene" data-scene="det-2" data-mood="image" data-title="Detalhe · acabamento contínuo">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-tl">
-      <span class="label">Detalhe II</span>
-      <div class="title-sm">Mão humana visível.</div>
-      <p class="body-md">Toda superfície é trabalhada manualmente. Nenhuma face é industrial.<br/>A textura do tato é parte do programa.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Detalhe II</span>
+          <div class="title-elem">Mão humana visível.</div>
+          <p class="body-elem">Toda superfície é trabalhada manualmente. Nenhuma face é industrial. A textura do tato é parte do programa — não acabamento, mas conteúdo.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════ DETALHE 3 ═══════════ -->
+  <!-- ═══════════ DETALHE 3 · Memória construtiva ═══════════ -->
   <section class="scene" data-scene="det-3" data-mood="image" data-title="Detalhe · materialidade ancestral">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-bl">
-      <span class="label">Detalhe III</span>
-      <div class="title-sm">Memória construtiva.</div>
-      <p class="body-md">A técnica é ancestral. Maia, persa, brasileira — convergem na mesma operação: tecer em vez de empilhar.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">Detalhe III</span>
+          <div class="title-elem">Memória construtiva.</div>
+          <p class="body-elem">A técnica é ancestral. Maia, persa, brasileira — convergem na mesma operação: tecer em vez de empilhar.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1588,13 +1794,20 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
   </section>
 
   <section class="scene" data-scene="A2" data-mood="image" data-pathway="A" data-title="A · Materiais">
-    <div class="photo-zone photo-zone--full photo-zone--soft">
+    <div class="scene-bg">
       <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
     </div>
-    <div class="arch-callout arch-callout-bl">
-      <span class="label">A · Especificação de materiais</span>
-      <div class="title-sm">Quatro camadas.</div>
-      <p class="body-md"><strong>1.</strong> Estrutura: concreto curado · cal · armadura mínima.<br/><strong>2.</strong> Revestimento: cipó trançado · interno e externo.<br/><strong>3.</strong> Piso: madeira regional · estrutura flutuante.<br/><strong>4.</strong> Têxtil: kilims persas · tecidos indígenas BR.</p>
+    <div class="scene-inner">
+      <div class="photo-split reveal">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+        </div>
+        <div class="photo-meta">
+          <span class="label-elem">A · Especificação de materiais</span>
+          <div class="title-elem">Quatro camadas.</div>
+          <p class="body-elem"><strong>1.</strong>&nbsp;&nbsp;Estrutura: concreto curado · cal · armadura mínima.<br/><strong>2.</strong>&nbsp;&nbsp;Revestimento: cipó trançado · interno e externo.<br/><strong>3.</strong>&nbsp;&nbsp;Piso: madeira regional · estrutura flutuante.<br/><strong>4.</strong>&nbsp;&nbsp;Têxtil: kilims persas · tecidos indígenas BR.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1717,21 +1930,28 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
   </section>
 
   <section class="scene" data-scene="B3" data-mood="dark" data-pathway="B" data-title="B · A mesma língua">
-    <div class="diptych">
-      <div class="photo-zone photo-zone--clean">
-        <img data-src="assets/images/dome-arc-3.jpg" alt="" />
-        <div class="diptych-caption">Uh May · Tulum</div>
-      </div>
-      <div class="photo-zone photo-zone--clean">
-        <img data-src="assets/images/dome-arc-det.jpg" alt="" />
-        <div class="diptych-caption">A mesma operação</div>
-      </div>
+    <div class="scene-bg">
+      <img data-src="assets/images/dome-arc-3.jpg" alt="" />
     </div>
-    <div class="arch-callout" style="bottom: 48px; left: 50%; transform: translateX(-50%); text-align: center; max-width: 600px;">
-      <p class="title-sm" style="color: var(--text-on-dark);">
-        O AÔÔ já fala essa língua.<br/>
-        <span class="accent-sand">O dome dá continuidade à frase.</span>
-      </p>
+    <div class="scene-inner" data-align="center">
+      <div class="reveal" style="text-align: center; width: 100%;">
+        <span class="label-elem" style="display: block; color: var(--sand); margin-bottom: 24px;">B · A mesma língua</span>
+      </div>
+      <div class="photo-duo reveal" data-delay="200">
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-3.jpg" alt="" />
+          <div class="photo-card-tag">Uh May · Tulum</div>
+        </div>
+        <div class="photo-card">
+          <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+          <div class="photo-card-tag">A mesma operação</div>
+        </div>
+      </div>
+      <div class="photo-duo-caption reveal" data-delay="500">
+        <p class="title-sm" style="color: var(--text-on-dark);">
+          O AÔÔ já fala essa língua.&nbsp;&nbsp;<span class="accent-sand">O dome dá continuidade à frase.</span>
+        </p>
+      </div>
     </div>
   </section>
 
