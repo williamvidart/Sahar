@@ -325,7 +325,7 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
 .hero-title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(60px, 9vw, 140px);
+  font-size: clamp(48px, 7vw, 108px);
   line-height: 0.95;
   letter-spacing: -0.02em;
 }
@@ -333,31 +333,31 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
 .title-md {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(36px, 5vw, 72px);
-  line-height: 1.05;
+  font-size: clamp(28px, 3.8vw, 54px);
+  line-height: 1.08;
   letter-spacing: -0.012em;
 }
 
 .title-sm {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(24px, 3vw, 38px);
-  line-height: 1.15;
+  font-size: clamp(20px, 2.3vw, 28px);
+  line-height: 1.2;
 }
 
 .quote {
   font-family: var(--serif);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(28px, 4vw, 56px);
-  line-height: 1.2;
+  font-size: clamp(22px, 3vw, 42px);
+  line-height: 1.22;
 }
 
 .body-lg {
   font-family: var(--sans);
   font-weight: 300;
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.65;
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.7;
   letter-spacing: 0.005em;
   max-width: 56ch;
 }
@@ -365,7 +365,7 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
 .body-md {
   font-family: var(--sans);
   font-weight: 300;
-  font-size: clamp(13px, 1vw, 15px);
+  font-size: clamp(12px, 0.9vw, 14px);
   line-height: 1.7;
   letter-spacing: 0.01em;
   max-width: 60ch;
@@ -413,7 +413,7 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
   opacity: 0;
   transform: scale(1.18);
   transition: opacity 1.8s var(--ease-out-expo);
-  filter: blur(48px) brightness(0.42) saturate(0.85);
+  filter: blur(56px) brightness(0.28) saturate(0.7);
   will-change: transform, opacity;
 }
 
@@ -431,9 +431,157 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15,20,16,0.35) 0%, rgba(15,20,16,0.0) 40%, rgba(15,20,16,0.55) 100%);
+  background: linear-gradient(180deg, rgba(10,14,11,0.55) 0%, rgba(10,14,11,0.30) 40%, rgba(10,14,11,0.70) 100%);
   z-index: 1;
 }
+
+/* ─────────── NATURE DECORATIONS (botanical SVG) ─────────── */
+
+.nature-deco {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 2s var(--ease-out-expo);
+}
+
+.scene.is-active .nature-deco { opacity: 0.4; transition-delay: 0.6s; }
+[data-mood="light"] .scene.is-active .nature-deco { opacity: 0.18; }
+
+.nature-deco svg { width: 100%; height: 100%; stroke: var(--sage); fill: none; stroke-width: 0.7; }
+[data-mood="light"] .nature-deco svg { stroke: var(--teal-persian); }
+
+.nature-deco--tl { top: 6%; left: 4%; width: 180px; height: 180px; }
+.nature-deco--tr { top: 8%; right: 5%; width: 160px; height: 200px; transform: scaleX(-1); }
+.nature-deco--bl { bottom: 8%; left: 5%; width: 220px; height: 160px; }
+.nature-deco--br { bottom: 10%; right: 6%; width: 180px; height: 220px; transform: scaleX(-1) rotate(8deg); }
+.nature-deco--cl { top: 50%; left: 3%; width: 140px; height: 240px; transform: translateY(-50%); }
+.nature-deco--cr { top: 50%; right: 3%; width: 140px; height: 240px; transform: translateY(-50%) scaleX(-1); }
+
+@keyframes deco-sway {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50%      { transform: rotate(1.5deg) translateY(-4px); }
+}
+
+.scene.is-active .nature-deco { animation: deco-sway 12s ease-in-out infinite; }
+.scene.is-active .nature-deco--tr { animation: deco-sway 14s ease-in-out infinite reverse; }
+.scene.is-active .nature-deco--bl { animation: deco-sway 16s ease-in-out infinite; }
+.scene.is-active .nature-deco--br { animation: deco-sway 13s ease-in-out infinite reverse; }
+
+/* ─────────── DETAIL MARQUEE (horizontal scroll) ─────────── */
+
+.marquee-stage {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 8vh 0;
+  z-index: 2;
+}
+
+.marquee-track {
+  display: flex;
+  gap: clamp(20px, 2.5vw, 40px);
+  width: max-content;
+  animation: marquee-scroll 36s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-stage:hover .marquee-track { animation-play-state: paused; }
+
+.marquee-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(280px, 28vw, 440px);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--forest-deep);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(245, 241, 232, 0.06);
+}
+
+.marquee-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-out-expo);
+}
+
+.scene.is-active .marquee-item img.loaded { opacity: 1; }
+
+.marquee-item-tag {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  background: rgba(15, 20, 16, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 6px 10px;
+  border-radius: 2px;
+  z-index: 2;
+}
+
+/* ─────────── DYNAMIC GALLERY (different positions/sizes) ─────────── */
+
+.gallery-stage {
+  position: relative;
+  width: 100%;
+  height: min(78vh, 720px);
+  z-index: 2;
+}
+
+.gallery-card {
+  position: absolute;
+  overflow: hidden;
+  background: var(--forest-deep);
+  box-shadow: 0 30px 70px -20px rgba(0,0,0,0.75), 0 0 0 1px rgba(245, 241, 232, 0.06);
+  transform: translateY(40px);
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-out-expo), transform 1.4s var(--ease-out-expo);
+}
+
+.scene.is-active .gallery-card { opacity: 1; transform: translateY(0); }
+.scene.is-active .gallery-card:nth-child(2) { transition-delay: 0.15s; }
+.scene.is-active .gallery-card:nth-child(3) { transition-delay: 0.3s; }
+.scene.is-active .gallery-card:nth-child(4) { transition-delay: 0.45s; }
+
+.gallery-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1.4s var(--ease-out-expo);
+}
+
+.scene.is-active .gallery-card img.loaded {
+  opacity: 1;
+  animation: kb-card 22s var(--ease-soft) forwards;
+}
+
+.gallery-card .marquee-item-tag {
+  bottom: 12px;
+  left: 12px;
+}
+
+/* Specific positions for 3-card gallery */
+.gallery-card--a { top: 6%; left: 2%; width: 30%; aspect-ratio: 4/5; }
+.gallery-card--b { top: 18%; left: 40%; width: 35%; aspect-ratio: 4/5; }
+.gallery-card--c { top: 5%; right: 4%; width: 22%; aspect-ratio: 3/4; }
+.gallery-card--d { bottom: 6%; left: 26%; width: 26%; aspect-ratio: 3/4; }
 
 .photo-split {
   display: grid;
@@ -493,17 +641,17 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
 .photo-meta .title-elem {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(32px, 3.6vw, 52px);
-  line-height: 1.05;
+  font-size: clamp(22px, 2.6vw, 36px);
+  line-height: 1.1;
   letter-spacing: -0.012em;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   color: var(--text-on-dark);
 }
 
 .photo-meta .body-elem {
   font-family: var(--sans);
   font-weight: 300;
-  font-size: clamp(14px, 1.05vw, 16px);
+  font-size: clamp(12px, 0.92vw, 14px);
   line-height: 1.7;
   letter-spacing: 0.005em;
   color: var(--text-on-dark);
@@ -796,7 +944,7 @@ body.is-video-scene .veil::before { display: none; }
 .cover-title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(72px, 12vw, 200px);
+  font-size: clamp(56px, 9vw, 150px);
   line-height: 0.9;
   letter-spacing: -0.03em;
 }
@@ -846,9 +994,9 @@ body.is-video-scene .veil::before { display: none; }
 .prompt-title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(32px, 4vw, 52px);
   line-height: 1;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
   letter-spacing: -0.02em;
 }
 
@@ -910,16 +1058,16 @@ body.is-video-scene .veil::before { display: none; }
 .element-title {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(28px, 3vw, 40px);
-  line-height: 1.1;
-  margin-bottom: 16px;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.12;
+  margin-bottom: 14px;
   letter-spacing: -0.01em;
 }
 
 .element-body {
   font-family: var(--sans);
   font-weight: 300;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
   letter-spacing: 0.005em;
   color: var(--text-on-dark);
@@ -1295,20 +1443,50 @@ body.is-video-scene .veil::before { display: none; }
 
   <!-- ═══════════ A PROPOSTA ═══════════ -->
   <section class="scene" data-scene="proposta" data-mood="dark" data-title="A proposta">
+    <div class="nature-deco nature-deco--tl">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 20 Q 60 50, 40 80 Q 20 120, 70 130 Q 120 140, 90 90 Q 60 60, 110 40 Q 160 20, 140 80 Q 130 130, 80 170" stroke-linecap="round"/>
+        <circle cx="40" cy="80" r="2.5"/>
+        <circle cx="110" cy="40" r="2"/>
+        <circle cx="80" cy="170" r="2"/>
+      </svg>
+    </div>
+    <div class="nature-deco nature-deco--br">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 V 190"/>
+        <path d="M100 50 Q 80 40, 60 50 Q 70 60, 100 60 Z"/>
+        <path d="M100 90 Q 130 80, 150 95 Q 130 100, 100 100 Z"/>
+        <path d="M100 130 Q 75 120, 55 135 Q 75 140, 100 140 Z"/>
+        <path d="M100 170 Q 125 160, 145 175 Q 125 180, 100 180 Z"/>
+      </svg>
+    </div>
     <div class="scene-inner" data-align="left">
       <div class="section-mark reveal">
         <span class="section-mark-line"></span>
         <span>A proposta</span>
       </div>
-      <h2 class="title-md reveal" data-delay="200" style="margin-top: 40px; max-width: 24ch;">
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 32px; max-width: 24ch;">
         Um instrumento arquitetônico<br/>
         de cura sonora<br/>
         <span class="accent-sand">dentro da Cidade Matarazzo.</span>
       </h2>
-      <p class="body-lg reveal" data-delay="500" style="margin-top: 48px; color: var(--text-on-dark-mute);">
-        Não um programa de hotelaria. Não uma instalação cultural temporária.<br/>
-        Uma peça construída — autônoma, com presença própria — que completa o conjunto.
-      </p>
+
+      <div class="reveal" data-delay="500" style="margin-top: 56px; max-width: 64ch;">
+        <div class="label" style="color: var(--sand); margin-bottom: 18px;">O diferencial</div>
+        <p class="body-lg" style="line-height: 1.8;">
+          A primeira síntese mundial entre três escolas que jamais convergiram em uma só obra:
+        </p>
+        <div class="stack-sm" style="margin-top: 24px;">
+          <p class="body-lg"><strong style="color: var(--sand);">Arquitetura têxtil</strong> — Roth / Azulik, Tulum.</p>
+          <p class="body-lg"><strong style="color: var(--sand);">Engenharia acústica</strong> — Svaram, Auroville.</p>
+          <p class="body-lg"><strong style="color: var(--sand);">Direção curatorial</strong> — Sahar, Alto Paraíso.</p>
+        </div>
+        <p class="body-lg" style="margin-top: 28px; color: var(--text-on-dark-mute);">
+          Continuidade construtiva direta com o AÔÔ.<br/>
+          Calibrado para o corpo. Não para o espectador.
+        </p>
+      </div>
+
       <div class="specs-row reveal" data-delay="700">
         <div class="spec-cell">
           <div class="label">Tipologia</div>
@@ -1332,27 +1510,39 @@ body.is-video-scene .veil::before { display: none; }
 
   <!-- ═══════════ A LINGUAGEM ESCOLHIDA ═══════════ -->
   <section class="scene" data-scene="linguagem" data-mood="light" data-title="A linguagem escolhida">
+    <div class="nature-deco nature-deco--cr">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 V 190"/>
+        <path d="M100 40 Q 70 30, 50 45 Q 65 55, 100 55 Z"/>
+        <path d="M100 75 Q 135 65, 155 80 Q 130 90, 100 90 Z"/>
+        <path d="M100 110 Q 65 100, 45 115 Q 70 125, 100 125 Z"/>
+        <path d="M100 145 Q 135 135, 155 150 Q 130 160, 100 160 Z"/>
+      </svg>
+    </div>
     <div class="scene-inner" data-align="left">
       <div class="section-mark reveal">
         <span class="section-mark-line"></span>
         <span>A linguagem escolhida</span>
       </div>
-      <h2 class="hero-title reveal" data-delay="200" style="margin-top: 24px; font-size: clamp(72px, 11vw, 180px);">
+      <h2 class="hero-title reveal" data-delay="200" style="margin-top: 20px; font-size: clamp(56px, 8.5vw, 140px);">
         <em>Azulik.</em>
       </h2>
-      <p class="title-sm reveal" data-delay="400" style="margin-top: 32px; max-width: 42ch;">
+      <p class="title-sm reveal" data-delay="400" style="margin-top: 28px; max-width: 42ch;">
         Eduardo Neira — <em>Roth</em>. Tulum, México.<br/>
         Vinte anos de prática em arquitetura têxtil,<br/>
         formas catenárias, integração com o sítio.
       </p>
-      <p class="body-lg reveal" data-delay="600" style="margin-top: 40px; color: var(--text-on-light-mute);">
+      <p class="body-lg reveal" data-delay="600" style="margin-top: 32px; color: var(--text-on-light-mute);">
         Sem colunas convencionais. Cipó, concreto curado, madeira. Cada estrutura é tecida — como cesto — em diálogo direto com as árvores existentes do terreno.
       </p>
     </div>
   </section>
 
-  <!-- ═══════════ VIDEO 1 (contained, GPU-optimized) ═══════════ -->
+  <!-- ═══════════ VIDEO 1 (poster bg blurred + foreground card) ═══════════ -->
   <section class="scene" data-scene="video-1" data-mood="dark" data-title="Azulik · em movimento">
+    <div class="scene-bg">
+      <img data-src="assets/images/video-1-poster.jpg" alt="" />
+    </div>
     <div class="scene-inner" data-align="center">
       <div class="video-card-wrap reveal">
         <div class="video-card">
@@ -1366,8 +1556,11 @@ body.is-video-scene .veil::before { display: none; }
     </div>
   </section>
 
-  <!-- ═══════════ VIDEO 2 (contained, GPU-optimized) ═══════════ -->
+  <!-- ═══════════ VIDEO 2 (poster bg blurred + foreground card) ═══════════ -->
   <section class="scene" data-scene="video-2" data-mood="dark" data-title="Azulik · em movimento · II">
+    <div class="scene-bg">
+      <img data-src="assets/images/video-2-poster.jpg" alt="" />
+    </div>
     <div class="scene-inner" data-align="center">
       <div class="video-card-wrap reveal">
         <div class="video-card">
@@ -1509,131 +1702,93 @@ body.is-video-scene .veil::before { display: none; }
     </div>
   </section>
 
-  <!-- ═══════════ DOME ARC 3 · Limiar ═══════════ -->
-  <section class="scene" data-scene="arc-3" data-mood="image" data-title="O limiar · árvore">
+  <!-- ═══════════ DOME GALLERY (dinâmica) ═══════════ -->
+  <section class="scene" data-scene="arc-gallery" data-mood="image" data-title="A obra · galeria">
     <div class="scene-bg">
       <img data-src="assets/images/dome-arc-3.jpg" alt="" />
     </div>
-    <div class="scene-inner">
-      <div class="photo-split reveal">
-        <div class="photo-card">
+    <div class="scene-inner" style="max-width: 1320px;">
+      <div class="row" style="align-items: flex-end; margin-bottom: 24px;">
+        <div class="col" style="flex: 1;">
+          <span class="label-elem reveal" style="color: var(--sand); display: block; margin-bottom: 12px;">Elementos V · VI · VII</span>
+          <h3 class="title-md reveal" data-delay="200" style="max-width: 18ch;">
+            Limiar. Escala. Continuidade.
+          </h3>
+        </div>
+        <div class="col" style="flex: 1;">
+          <p class="body-elem reveal" data-delay="400" style="opacity: 0.92;">
+            Constrói-se <em>com</em> o sítio, não sobre ele. A escala se negocia com o corpo, não com o monumento. Não há interrupção entre o construído e o vivo — envoltório, piso, vegetação: uma só matéria.
+          </p>
+        </div>
+      </div>
+      <div class="gallery-stage">
+        <div class="gallery-card gallery-card--a">
           <img data-src="assets/images/dome-arc-3.jpg" alt="" />
+          <div class="marquee-item-tag">Limiar</div>
         </div>
-        <div class="photo-meta">
-          <span class="label-elem">Elemento V · O limiar</span>
-          <div class="title-elem">Constrói-se com o sítio.<br/>Não sobre ele.</div>
-          <p class="body-elem">A estrutura se tece em torno das árvores existentes. Onde há tronco, há acomodação. O envoltório segue a vegetação — nunca o contrário.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ DOME ARC 4 · Escala humana ═══════════ -->
-  <section class="scene" data-scene="arc-4" data-mood="image" data-title="A presença · escala humana">
-    <div class="scene-bg">
-      <img data-src="assets/images/dome-arc-4.jpg" alt="" />
-    </div>
-    <div class="scene-inner">
-      <div class="photo-split reveal">
-        <div class="photo-card">
+        <div class="gallery-card gallery-card--b">
           <img data-src="assets/images/dome-arc-4.jpg" alt="" />
+          <div class="marquee-item-tag">Escala</div>
         </div>
-        <div class="photo-meta">
-          <span class="label-elem">Elemento VI</span>
-          <div class="title-elem">A presença humana.</div>
-          <p class="body-elem">A escala é negociada com o corpo, não com o monumento. O espaço se ajusta a quem o habita — a proporção é íntima, contemplativa.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ DOME ARC 5 · Continuidade ═══════════ -->
-  <section class="scene" data-scene="arc-5" data-mood="image" data-title="Continuidade · integração">
-    <div class="scene-bg">
-      <img data-src="assets/images/dome-arc-5.jpg" alt="" />
-    </div>
-    <div class="scene-inner">
-      <div class="photo-split reveal">
-        <div class="photo-card">
+        <div class="gallery-card gallery-card--c">
           <img data-src="assets/images/dome-arc-5.jpg" alt="" />
-        </div>
-        <div class="photo-meta">
-          <span class="label-elem">Elemento VII</span>
-          <div class="title-elem">A continuidade.</div>
-          <p class="body-elem">Não há interrupção entre o construído e o vivo. O envoltório, o piso, a vegetação — uma só matéria, sem hierarquia.</p>
+          <div class="marquee-item-tag">Continuidade</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════ INTERLÚDIO: O DETALHE ═══════════ -->
-  <section class="scene" data-scene="detalhes-intro" data-mood="dark" data-title="O detalhe define a obra">
-    <div class="scene-inner" data-align="center">
-      <div class="section-mark reveal" style="justify-content: center;">
-        <span class="section-mark-line"></span>
-        <span>O detalhe</span>
-        <span class="section-mark-line"></span>
-      </div>
-      <h2 class="title-md reveal" data-delay="200" style="margin-top: 32px; max-width: 28ch;">
-        Nesta arquitetura,<br/>
-        <em class="accent-sand">o detalhe não é decoração.</em><br/>
-        É a obra inteira.
-      </h2>
-    </div>
-  </section>
-
-  <!-- ═══════════ DETALHE 1 · Árvore ═══════════ -->
-  <section class="scene" data-scene="det-1" data-mood="image" data-title="Detalhe · integração com a árvore">
+  <!-- ═══════════ DETALHES · MARQUEE (horizontal scroll) ═══════════ -->
+  <section class="scene" data-scene="det-marquee" data-mood="dark" data-title="O detalhe · galeria">
     <div class="scene-bg">
       <img data-src="assets/images/dome-arc-det.jpg" alt="" />
     </div>
-    <div class="scene-inner">
-      <div class="photo-split reveal">
-        <div class="photo-card">
-          <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+    <div class="scene-inner" style="max-width: 100%; padding: 0;">
+      <div style="padding: 0 4vw; margin-bottom: 24px;">
+        <div class="section-mark reveal">
+          <span class="section-mark-line"></span>
+          <span>O detalhe define a obra</span>
         </div>
-        <div class="photo-meta">
-          <span class="label-elem">Detalhe I</span>
-          <div class="title-elem">A árvore atravessa a estrutura.</div>
-          <p class="body-elem">O envoltório se molda em torno do tronco. Não há canto reto, não há "vedação". O detalhe construtivo é também o gesto poético.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ DETALHE 2 · Mão humana ═══════════ -->
-  <section class="scene" data-scene="det-2" data-mood="image" data-title="Detalhe · acabamento contínuo">
-    <div class="scene-bg">
-      <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
-    </div>
-    <div class="scene-inner">
-      <div class="photo-split reveal">
-        <div class="photo-card">
-          <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
-        </div>
-        <div class="photo-meta">
-          <span class="label-elem">Detalhe II</span>
-          <div class="title-elem">Mão humana visível.</div>
-          <p class="body-elem">Toda superfície é trabalhada manualmente. Nenhuma face é industrial. A textura do tato é parte do programa — não acabamento, mas conteúdo.</p>
+        <div class="row reveal" data-delay="200" style="margin-top: 24px; align-items: flex-end;">
+          <div class="col" style="flex: 1;">
+            <h3 class="title-md" style="max-width: 22ch;">
+              Três detalhes. <em class="accent-sand">A mesma operação.</em>
+            </h3>
+          </div>
+          <div class="col" style="flex: 1;">
+            <p class="body-elem" style="opacity: 0.85;">
+              Nesta arquitetura, o detalhe construtivo é também o gesto poético: a árvore atravessa, a mão humana permanece visível, e a técnica ancestral — maia, persa, brasileira — converge em uma só operação: <em>tecer em vez de empilhar.</em>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ DETALHE 3 · Memória construtiva ═══════════ -->
-  <section class="scene" data-scene="det-3" data-mood="image" data-title="Detalhe · materialidade ancestral">
-    <div class="scene-bg">
-      <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
-    </div>
-    <div class="scene-inner">
-      <div class="photo-split reveal">
-        <div class="photo-card">
-          <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
-        </div>
-        <div class="photo-meta">
-          <span class="label-elem">Detalhe III</span>
-          <div class="title-elem">Memória construtiva.</div>
-          <p class="body-elem">A técnica é ancestral. Maia, persa, brasileira — convergem na mesma operação: tecer em vez de empilhar.</p>
+      <div class="marquee-stage reveal" data-delay="400">
+        <div class="marquee-track">
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+            <div class="marquee-item-tag">I · A árvore atravessa</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+            <div class="marquee-item-tag">II · Mão humana visível</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
+            <div class="marquee-item-tag">III · Memória construtiva</div>
+          </div>
+          <!-- duplicate for seamless loop -->
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+            <div class="marquee-item-tag">I · A árvore atravessa</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+            <div class="marquee-item-tag">II · Mão humana visível</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
+            <div class="marquee-item-tag">III · Memória construtiva</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1707,53 +1862,6 @@ body.is-video-scene .veil::before { display: none; }
               Não como ambientação. Não como serviço de spa.<br/>
               Como <em>peça arquitetônica autônoma</em> — com presença própria, programa próprio, voz própria — dentro do conjunto.
             </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ A CONDUÇÃO · POR QUE SAHAR ═══════════ -->
-  <section class="scene" data-scene="conducao" data-mood="light" data-title="A condução da obra">
-    <div class="scene-inner" data-align="left">
-      <div class="section-mark reveal">
-        <span class="section-mark-line"></span>
-        <span>A condução da obra</span>
-      </div>
-      <div class="row reveal" data-delay="200" style="margin-top: 40px;">
-        <div class="col" style="flex: 1.4;">
-          <h2 class="title-md" style="max-width: 22ch;">
-            Direção criativa<br/>
-            <em class="accent-teal">Sahar Farmanfarmaian.</em>
-          </h2>
-          <p class="body-lg" style="margin-top: 32px; color: var(--text-on-light);">
-            Curadora de espaços sagrados em vinte anos de prática. Autora do <strong>Noor Sanctuary</strong> em Alto Paraíso — referência regional de arquitetura ritual contemporânea.
-          </p>
-          <p class="body-lg" style="margin-top: 24px; color: var(--text-on-light-mute);">
-            Sahar opera nas interseções entre <em>geometria sagrada</em>, <em>calibração acústica</em> e <em>direção de obra</em>. Em uma única interlocução, coordena os três times — Azulik (forma), Svaram-Auroville (som), curadoria interna — sem intermediários.
-          </p>
-          <div class="specs-row" style="margin-top: 48px; border-color: var(--hairline-light);">
-            <div class="spec-cell" style="border-color: var(--hairline-light);">
-              <div class="label" style="color: var(--text-on-light-mute);">Origem</div>
-              <div class="spec-value">Qajar Dynasty · Pérsia</div>
-            </div>
-            <div class="spec-cell" style="border-color: var(--hairline-light);">
-              <div class="label" style="color: var(--text-on-light-mute);">Base</div>
-              <div class="spec-value">Alto Paraíso · 20 anos</div>
-            </div>
-            <div class="spec-cell" style="border-color: var(--hairline-light);">
-              <div class="label" style="color: var(--text-on-light-mute);">Prática</div>
-              <div class="spec-value">Altares · curadoria</div>
-            </div>
-            <div class="spec-cell" style="border-color: var(--hairline-light);">
-              <div class="label" style="color: var(--text-on-light-mute);">Rede</div>
-              <div class="spec-value">Azulik · Svaram · Auroville</div>
-            </div>
-          </div>
-        </div>
-        <div class="col" style="flex: 1;">
-          <div class="portrait-frame photo-zone">
-            <img data-src="assets/images/16-sahar.jpg" alt="" />
           </div>
         </div>
       </div>
