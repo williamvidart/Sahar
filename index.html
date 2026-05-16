@@ -597,36 +597,72 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
   background: linear-gradient(180deg, rgba(15,20,16,0.20) 0%, rgba(15,20,16,0.0) 30%, rgba(15,20,16,0.35) 100%);
 }
 
-/* ─────────── VIDEO ZONES ─────────── */
+/* ─────────── VIDEO SCENES (contained, performance-optimized) ─────────── */
 
-.video-zone {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--forest-deep);
-  overflow: hidden;
+.video-card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
 }
 
-.video-zone video {
+.video-card {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  height: min(82vh, 920px);
+  max-width: 90vw;
+  overflow: hidden;
+  background: var(--forest-deep);
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(245, 241, 232, 0.06);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.video-card video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 1.6s var(--ease-out-expo);
+  transition: opacity 1.2s var(--ease-out-expo);
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
-.scene.is-active .video-zone video { opacity: 1; }
+.scene.is-active .video-card video { opacity: 1; }
 
-.video-zone::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(15,20,16,0.45) 0%, rgba(15,20,16,0.0) 30%, rgba(15,20,16,0.65) 100%);
-  pointer-events: none;
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  opacity: 0.85;
 }
 
+.video-caption-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sage);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+/* Disable mist & veil on video scenes for GPU headroom */
+body.is-video-scene .mist {
+  opacity: 0 !important;
+  animation-play-state: paused !important;
+}
+
+body.is-video-scene .veil::before { display: none; }
+
+/* legacy class kept in case referenced */
 .video-indicator {
   position: absolute;
   bottom: 40px;
@@ -1315,25 +1351,33 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
     </div>
   </section>
 
-  <!-- ═══════════ VIDEO 1 ═══════════ -->
-  <section class="scene" data-scene="video-1" data-mood="image" data-title="Azulik · em movimento">
-    <div class="video-zone">
-      <video id="vid-1" data-src="assets/images/video-1.mp4" muted loop playsinline preload="metadata"></video>
-    </div>
-    <div class="video-indicator">
-      <span class="video-indicator-dot"></span>
-      <span>Azulik · em movimento · I</span>
+  <!-- ═══════════ VIDEO 1 (contained, GPU-optimized) ═══════════ -->
+  <section class="scene" data-scene="video-1" data-mood="dark" data-title="Azulik · em movimento">
+    <div class="scene-inner" data-align="center">
+      <div class="video-card-wrap reveal">
+        <div class="video-card">
+          <video id="vid-1" data-src="assets/images/video-1.mp4" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="video-caption">
+          <span class="video-caption-dot"></span>
+          <span>Azulik · em movimento · I</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════ VIDEO 2 ═══════════ -->
-  <section class="scene" data-scene="video-2" data-mood="image" data-title="Azulik · em movimento · II">
-    <div class="video-zone">
-      <video id="vid-2" data-src="assets/images/video-2.mp4" muted loop playsinline preload="metadata"></video>
-    </div>
-    <div class="video-indicator">
-      <span class="video-indicator-dot"></span>
-      <span>Azulik · em movimento · II</span>
+  <!-- ═══════════ VIDEO 2 (contained, GPU-optimized) ═══════════ -->
+  <section class="scene" data-scene="video-2" data-mood="dark" data-title="Azulik · em movimento · II">
+    <div class="scene-inner" data-align="center">
+      <div class="video-card-wrap reveal">
+        <div class="video-card">
+          <video id="vid-2" data-src="assets/images/video-2.mp4" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="video-caption">
+          <span class="video-caption-dot"></span>
+          <span>Azulik · em movimento · II</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2233,6 +2277,10 @@ body[data-in-pathway="true"] .path-trigger[data-pathway="back"] {
       const mood = target.dataset.mood || 'dark';
       document.body.dataset.currentMood = mood;
       document.body.classList.toggle('is-light-active', mood === 'light');
+
+      // Disable mist on video scenes for GPU headroom
+      const isVideoScene = !!target.querySelector('video');
+      document.body.classList.toggle('is-video-scene', isVideoScene);
 
       const pw = target.dataset.pathway;
       if (pw) {
