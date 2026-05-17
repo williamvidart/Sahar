@@ -649,10 +649,10 @@ body[data-current-mood="light"] .home-btn {
   left: 12px;
 }
 
-/* 3-card editorial gallery — aligned with breathing space */
-.gallery-card--a { top: 8%; left: 1%; width: 28%; aspect-ratio: 3/4; }
-.gallery-card--b { top: 20%; left: 35%; width: 28%; aspect-ratio: 4/5; }
-.gallery-card--c { top: 8%; right: 1%; width: 32%; aspect-ratio: 4/3; }
+/* 3-card editorial gallery — TOP-aligned (same baseline) */
+.gallery-card--a { top: 8%; left: 1%; width: 30%; aspect-ratio: 4/5; }
+.gallery-card--b { top: 8%; left: 35%; width: 30%; aspect-ratio: 4/5; }
+.gallery-card--c { top: 8%; right: 1%; width: 30%; aspect-ratio: 4/5; }
 
 .photo-split {
   display: grid;
@@ -1875,11 +1875,20 @@ body.is-video-scene .veil::before { display: none; }
         What the work must deliver<br/>
         as a <em>spatial experience.</em>
       </h2>
-      <div class="stack-md reveal" data-delay="400" style="margin-top: 40px; max-width: 64ch;">
-        <p class="title-sm">Whoever enters <em>slows down</em> before thinking.</p>
-        <p class="title-sm">The inner silence becomes <em>quieter</em> than any silence from outside.</p>
-        <p class="title-sm">Whoever enters the sacred space will be <em>touched by the frequency</em> we have created within this sound temple.</p>
-        <p class="title-sm">Those who leave, leave the space carrying a <em>higher frequency.</em></p>
+      <div class="row" style="gap: clamp(40px, 5vw, 80px); align-items: center; margin-top: 24px;">
+        <div class="col" style="flex: 1.1;">
+          <div class="stack-md reveal" data-delay="400" style="max-width: 52ch;">
+            <p class="title-sm">Whoever enters <em>slows down</em> before thinking.</p>
+            <p class="title-sm">The inner silence becomes <em>quieter</em> than any silence from outside.</p>
+            <p class="title-sm">Whoever enters the sacred space will be <em>touched by the frequency</em> we have created within this sound temple.</p>
+            <p class="title-sm">Those who leave, leave the space carrying a <em>higher frequency.</em></p>
+          </div>
+        </div>
+        <div class="col" style="flex: 0.9;">
+          <div class="photo-card reveal" data-delay="300" style="max-width: 480px; margin-left: auto; aspect-ratio: 3/4; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.45), 0 0 0 1px rgba(26, 31, 27, 0.08);">
+            <img data-src="assets/images/foto-nova-2.jpg" alt="" />
+          </div>
+        </div>
       </div>
     </div>
   </section>
