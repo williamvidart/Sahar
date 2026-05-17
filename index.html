@@ -649,9 +649,10 @@ body[data-current-mood="light"] .home-btn {
   left: 12px;
 }
 
-/* 2-card editorial gallery — different sizes and positions */
-.gallery-card--a { top: 6%; left: 2%; width: 34%; aspect-ratio: 3/4; }
-.gallery-card--c { top: 14%; right: 2%; width: 42%; aspect-ratio: 16/11; }
+/* 3-card editorial gallery — aligned with breathing space */
+.gallery-card--a { top: 8%; left: 1%; width: 28%; aspect-ratio: 3/4; }
+.gallery-card--b { top: 20%; left: 35%; width: 28%; aspect-ratio: 4/5; }
+.gallery-card--c { top: 8%; right: 1%; width: 32%; aspect-ratio: 4/3; }
 
 .photo-split {
   display: grid;
@@ -1714,7 +1715,11 @@ body.is-video-scene .veil::before { display: none; }
       <div class="gallery-stage">
         <div class="gallery-card gallery-card--a">
           <img data-src="assets/images/dome-arc-3.jpg" alt="" />
-          <div class="marquee-item-tag">Threshold &amp; Scale</div>
+          <div class="marquee-item-tag">Threshold</div>
+        </div>
+        <div class="gallery-card gallery-card--b">
+          <img data-src="assets/images/dome-arc.jpg" alt="" />
+          <div class="marquee-item-tag">Scale</div>
         </div>
         <div class="gallery-card gallery-card--c">
           <img data-src="assets/images/dome-roof.jpg" alt="" />
