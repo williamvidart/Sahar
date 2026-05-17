@@ -649,11 +649,9 @@ body[data-current-mood="light"] .home-btn {
   left: 12px;
 }
 
-/* Specific positions for 3-card gallery (no overlap @ 1440x900) */
-.gallery-card--a { top: 4%; left: 1%; width: 27%; aspect-ratio: 3/4; }
-.gallery-card--b { top: 22%; left: 32%; width: 32%; aspect-ratio: 4/5; }
-.gallery-card--c { top: 6%; right: 1%; width: 28%; aspect-ratio: 3/4; }
-.gallery-card--d { bottom: 6%; left: 26%; width: 26%; aspect-ratio: 3/4; }
+/* 2-card editorial gallery — different sizes and positions */
+.gallery-card--a { top: 6%; left: 2%; width: 34%; aspect-ratio: 3/4; }
+.gallery-card--c { top: 14%; right: 2%; width: 42%; aspect-ratio: 16/11; }
 
 .photo-split {
   display: grid;
@@ -1716,11 +1714,7 @@ body.is-video-scene .veil::before { display: none; }
       <div class="gallery-stage">
         <div class="gallery-card gallery-card--a">
           <img data-src="assets/images/dome-arc-3.jpg" alt="" />
-          <div class="marquee-item-tag">Threshold</div>
-        </div>
-        <div class="gallery-card gallery-card--b">
-          <img data-src="assets/images/dome-arc-4.jpg" alt="" />
-          <div class="marquee-item-tag">Scale</div>
+          <div class="marquee-item-tag">Threshold &amp; Scale</div>
         </div>
         <div class="gallery-card gallery-card--c">
           <img data-src="assets/images/dome-roof.jpg" alt="" />
@@ -1890,14 +1884,14 @@ body.is-video-scene .veil::before { display: none; }
     <div class="scene-inner" data-align="left" style="max-width: 1320px;">
       <div class="section-mark reveal">
         <span class="section-mark-line"></span>
-        <span>The missing piece in the program</span>
+        <span>The missing piece</span>
       </div>
-      <h2 class="title-md reveal" data-delay="200" style="margin-top: 28px; max-width: 30ch;">
+      <h2 class="title-md reveal" data-delay="200" style="margin-top: 20px; max-width: 30ch;">
         Cidade Matarazzo today operates<br/>
         across <em>four built registers.</em>
       </h2>
 
-      <div class="inheritance reveal" data-delay="400">
+      <div class="inheritance reveal" data-delay="400" style="margin-top: 28px;">
         <div class="inheritance-cell">
           <div class="label">Landscape</div>
           <div class="inheritance-name">The tower</div>
@@ -1920,12 +1914,12 @@ body.is-video-scene .veil::before { display: none; }
         </div>
       </div>
 
-      <div class="inheritance-missing reveal" data-delay="700">
-        <div class="row" style="align-items: center; gap: clamp(40px, 5vw, 80px);">
-          <div class="col" style="flex: 1.3;">
-            <div class="label accent-sand" style="margin-bottom: 18px; letter-spacing: 0.34em;">Yet to be written in volume</div>
-            <h3 class="hero-title" style="font-size: clamp(54px, 8vw, 120px); line-height: 0.96; letter-spacing: -0.025em;">
-              The <em class="accent-sand">sonic<br/>register.</em>
+      <div class="reveal" data-delay="700" style="margin-top: 36px; padding-top: 24px; border-top: 2px solid var(--sand); width: 100%;">
+        <div class="row" style="align-items: center; gap: clamp(32px, 4vw, 56px);">
+          <div class="col" style="flex: 1.2;">
+            <div class="label accent-sand" style="margin-bottom: 12px; letter-spacing: 0.32em;">Yet to be written in volume</div>
+            <h3 style="font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 5.4vw, 78px); line-height: 1.0; letter-spacing: -0.02em; color: var(--text-on-dark);">
+              The <em class="accent-sand">sonic register.</em>
             </h3>
           </div>
           <div class="col" style="flex: 1;">
