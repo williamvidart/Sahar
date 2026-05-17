@@ -72,7 +72,7 @@ html, body {
   transition: opacity 0.8s var(--ease-cinema), visibility 0s linear 0.8s;
   background: var(--forest-black);
   z-index: 1;
-  padding: 76px 0 84px;
+  padding: 100px 0 96px;
 }
 
 .scene[data-mood="light"] { background: var(--pearl); color: var(--text-on-light); }
@@ -549,11 +549,13 @@ body[data-current-mood="light"] .home-btn {
 
 .marquee-track {
   display: flex;
-  gap: clamp(16px, 1.8vw, 28px);
+  gap: clamp(24px, 2.5vw, 48px);
   width: max-content;
-  animation: marquee-scroll 36s linear infinite;
+  animation: marquee-scroll 90s linear infinite;
   will-change: transform;
   align-items: center;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes marquee-scroll {
@@ -1513,52 +1515,34 @@ body.is-video-scene .veil::before { display: none; }
 
   <!-- ═══════════ INSPIRATIONS I · GOTA ═══════════ -->
   <section class="scene" data-scene="insp-1" data-mood="dark" data-title="Inspirations · Gota">
-    <div class="nature-deco nature-deco--tl">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30 20 Q 60 50, 40 80 Q 20 120, 70 130 Q 120 140, 90 90 Q 60 60, 110 40 Q 160 20, 140 80 Q 130 130, 80 170" stroke-linecap="round"/>
-        <circle cx="40" cy="80" r="2.5"/>
-        <circle cx="110" cy="40" r="2"/>
-      </svg>
+    <div class="scene-bg">
+      <img data-src="assets/images/gota.jpg" alt="" />
     </div>
     <div class="scene-inner" data-align="left">
-      <div class="section-mark reveal">
-        <span class="section-mark-line"></span>
-        <span>Inspirations · I</span>
-      </div>
-      <h2 class="title-md reveal" data-delay="200" style="margin-top: 20px; max-width: 22ch;">
-        <em>Gota.</em><br/>
-        Alto Paraíso, Brazil.
-      </h2>
-      <div class="row reveal" data-delay="400" style="margin-top: 40px; gap: clamp(40px, 5vw, 80px);">
+      <div class="row" style="gap: clamp(40px, 5vw, 80px); align-items: center;">
         <div class="col" style="flex: 1;">
-          <p class="body-lg">
-            A sound temple built decades ago in the shape of a water drop — surrounded by water, clad in stone, opened by silence. Organic in form, biodynamic in vibration. A masterpiece in its own right.
+          <div class="section-mark reveal">
+            <span class="section-mark-line"></span>
+            <span>Inspirations · I</span>
+          </div>
+          <h2 class="title-md reveal" data-delay="200" style="margin-top: 20px; max-width: 22ch;">
+            <em>Gota.</em><br/>
+            Alto Paraíso, Brazil.
+          </h2>
+          <p class="body-lg reveal" data-delay="400" style="margin-top: 24px;">
+            A sound temple built decades ago in the shape of a water drop — surrounded by water, clad in stone, opened by silence. Organic in form, biodynamic in vibration.
           </p>
-          <p class="body-lg" style="margin-top: 20px; color: var(--text-on-dark-mute);">
-            Alexandre visited this space during a stay near Sahar's <em>Noor Sanctuary</em> in Alto Paraíso. The experience opened the conversation that now lives in this proposal — a quiet conviction that Cidade Matarazzo deserves a sonic body of equivalent depth.
+          <p class="body-lg reveal" data-delay="500" style="margin-top: 18px; color: var(--text-on-dark-mute);">
+            Alexandre visited this space during a stay near Sahar's <em>Noor Sanctuary</em>. The experience opened the conversation that now lives in this proposal.
           </p>
-          <p class="body-lg" style="margin-top: 20px;">
+          <p class="body-lg reveal" data-delay="600" style="margin-top: 18px;">
             <em class="accent-sand">A masterpiece is honored — never copied. It is honored through what it inspires.</em>
           </p>
         </div>
-        <div class="col" style="flex: 0.85;">
-          <div class="specs-row" style="margin-top: 0; grid-template-columns: 1fr 1fr;">
-            <div class="spec-cell">
-              <div class="label">Origin</div>
-              <div class="spec-value">Alto Paraíso · Brazil</div>
-            </div>
-            <div class="spec-cell">
-              <div class="label">Form</div>
-              <div class="spec-value">Drop · stone &amp; water</div>
-            </div>
-            <div class="spec-cell">
-              <div class="label">Purpose</div>
-              <div class="spec-value">Sound healing temple</div>
-            </div>
-            <div class="spec-cell">
-              <div class="label">Relevance</div>
-              <div class="spec-value">Reference · not template</div>
-            </div>
+        <div class="col" style="flex: 0.9;">
+          <div class="photo-card reveal" data-delay="300" style="max-width: 460px; margin-left: auto; aspect-ratio: 4/3;">
+            <img data-src="assets/images/gota.jpg" alt="" />
+            <div class="photo-card-tag">Gota · Alto Paraíso</div>
           </div>
         </div>
       </div>
@@ -1567,42 +1551,40 @@ body.is-video-scene .veil::before { display: none; }
 
   <!-- ═══════════ INSPIRATIONS II · SONORIUM ═══════════ -->
   <section class="scene" data-scene="insp-2" data-mood="light" data-title="Inspirations · Sonorium">
-    <div class="nature-deco nature-deco--br">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="40"/>
-        <circle cx="100" cy="100" r="40" transform="rotate(60 100 100)"/>
-        <circle cx="100" cy="100" r="40" transform="rotate(120 100 100)"/>
-      </svg>
-    </div>
     <div class="scene-inner" data-align="left">
-      <div class="section-mark reveal">
-        <span class="section-mark-line"></span>
-        <span>Inspirations · II</span>
-      </div>
-      <h2 class="title-md reveal" data-delay="200" style="margin-top: 20px; max-width: 22ch;">
-        <em>Sonorium.</em><br/>
-        Tulåh Clinical Wellness, Kerala.
-      </h2>
-      <div class="row reveal" data-delay="400" style="margin-top: 40px; gap: clamp(40px, 5vw, 80px);">
+      <div class="row" style="gap: clamp(40px, 5vw, 80px); align-items: center;">
         <div class="col" style="flex: 1;">
-          <p class="body-lg" style="color: var(--text-on-light);">
+          <div class="section-mark reveal">
+            <span class="section-mark-line"></span>
+            <span>Inspirations · II</span>
+          </div>
+          <h2 class="title-md reveal" data-delay="200" style="margin-top: 20px; max-width: 22ch;">
+            <em>Sonorium.</em><br/>
+            Tulåh, Kerala.
+          </h2>
+          <p class="body-lg reveal" data-delay="400" style="margin-top: 22px; color: var(--text-on-light);">
             The world's largest sound healing dome, inaugurated by <strong>A. R. Rahman</strong> — built across nearly two decades of acoustic research by <strong>Svaram</strong>, the renowned sound research lab of Auroville, India.
           </p>
-          <p class="body-lg" style="margin-top: 20px; color: var(--text-on-light-mute);">
+          <p class="body-lg reveal" data-delay="500" style="margin-top: 16px; color: var(--text-on-light-mute);">
             A seven-fold sacred geometry — one fold for each chakra — calibrated to support nervous system regulation and inner stillness. Music becomes architecture; architecture becomes instrument.
           </p>
-          <div class="stack-sm" style="margin-top: 28px;">
+          <div class="stack-sm reveal" data-delay="600" style="margin-top: 24px;">
             <div class="label accent-teal">What Sahar brings forward</div>
             <p class="body-md" style="color: var(--text-on-light);">
-              <strong>Acoustic precision</strong> — calibrated frequency across the interior volume.<br/>
+              <strong>Acoustic precision</strong> — calibrated frequency across the volume.<br/>
               <strong>Sacred geometry</strong> — proportion as instrument, not ornament.<br/>
-              <strong>The Svaram team</strong> — direct collaboration with the same group that built the Sonorium with Rahman.<br/>
-              <strong>A living network</strong> — Sahar's working relationship with Svaram and Auroville is the entry point.
+              <strong>The Svaram team</strong> — the same group that built the Sonorium with Rahman.
             </p>
           </div>
-          <p class="body-md" style="margin-top: 20px; color: var(--text-on-light-mute);">
+          <p class="body-md reveal" data-delay="700" style="margin-top: 18px; color: var(--text-on-light-mute);">
             <em>@svaram.auroville · @tulah.life</em>
           </p>
+        </div>
+        <div class="col" style="flex: 0.9;">
+          <div class="photo-card reveal" data-delay="300" style="max-width: 520px; margin-left: auto; aspect-ratio: 16/10; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.45), 0 0 0 1px rgba(26, 31, 27, 0.08);">
+            <img data-src="assets/images/sonorium.webp" alt="" />
+            <div class="photo-card-tag">Sonorium · Tulåh · India</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1712,6 +1694,98 @@ body.is-video-scene .veil::before { display: none; }
     </div>
   </section>
 
+  <!-- ═══════════ DOME GALLERY ═══════════ -->
+  <section class="scene" data-scene="arc-gallery" data-mood="image" data-title="The work · gallery">
+    <div class="scene-bg">
+      <img data-src="assets/images/dome-arc-3.jpg" alt="" />
+    </div>
+    <div class="scene-inner" style="max-width: 1320px;">
+      <div class="row" style="align-items: flex-end; margin-bottom: 24px;">
+        <div class="col" style="flex: 1;">
+          <span class="label-elem reveal" style="color: var(--sand); display: block; margin-bottom: 12px;">Elements V · VI · VII</span>
+          <h3 class="title-md reveal" data-delay="200" style="max-width: 18ch;">
+            Threshold. Scale. Continuity.
+          </h3>
+        </div>
+        <div class="col" style="flex: 1;">
+          <p class="body-elem reveal" data-delay="400" style="opacity: 0.92;">
+            Built <em>with</em> the space, not upon it. Scale is negotiated with the body, not with the monument. There is no interruption between built and living — envelope, floor, vegetation: one single matter.
+          </p>
+        </div>
+      </div>
+      <div class="gallery-stage">
+        <div class="gallery-card gallery-card--a">
+          <img data-src="assets/images/dome-arc-3.jpg" alt="" />
+          <div class="marquee-item-tag">Threshold</div>
+        </div>
+        <div class="gallery-card gallery-card--b">
+          <img data-src="assets/images/dome-arc-4.jpg" alt="" />
+          <div class="marquee-item-tag">Scale</div>
+        </div>
+        <div class="gallery-card gallery-card--c">
+          <img data-src="assets/images/dome-roof.jpg" alt="" />
+          <div class="marquee-item-tag">Continuity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DETAILS · MARQUEE (horizontal scroll) ═══════════ -->
+  <section class="scene" data-scene="det-marquee" data-mood="dark" data-title="Details · gallery">
+    <div class="scene-bg">
+      <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+    </div>
+    <div class="scene-inner" style="max-width: 100%; padding: 0;">
+      <div style="padding: 0 4vw; margin-bottom: 24px;">
+        <div class="section-mark reveal">
+          <span class="section-mark-line"></span>
+          <span>The detail defines the work</span>
+        </div>
+        <div class="row reveal" data-delay="200" style="margin-top: 20px; align-items: flex-end;">
+          <div class="col" style="flex: 1;">
+            <h3 class="title-md" style="max-width: 20ch;">
+              <em class="accent-sand">Details.</em>
+            </h3>
+          </div>
+          <div class="col" style="flex: 1.5;">
+            <p class="body-elem" style="opacity: 0.85;">
+              In this architecture the constructive detail is also the poetic gesture: the tree crosses through, the human hand remains visible, and ancestral technique converges into a single operation — <em>to weave rather than to stack.</em>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="marquee-stage reveal" data-delay="400">
+        <div class="marquee-track">
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+            <div class="marquee-item-tag">I · The tree crosses through</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+            <div class="marquee-item-tag">II · Human hand visible</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
+            <div class="marquee-item-tag">III · Constructive memory</div>
+          </div>
+          <!-- duplicate for seamless loop -->
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det.jpg" alt="" />
+            <div class="marquee-item-tag">I · The tree crosses through</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
+            <div class="marquee-item-tag">II · Human hand visible</div>
+          </div>
+          <div class="marquee-item">
+            <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
+            <div class="marquee-item-tag">III · Constructive memory</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════ THE VOLUME ═══════════ -->
   <section class="scene" data-scene="elemento-volume" data-mood="dark" data-title="Element I · Volume">
     <div class="scene-inner">
@@ -1791,98 +1865,6 @@ body.is-video-scene .veil::before { display: none; }
     </div>
   </section>
 
-  <!-- ═══════════ DOME GALLERY ═══════════ -->
-  <section class="scene" data-scene="arc-gallery" data-mood="image" data-title="The work · gallery">
-    <div class="scene-bg">
-      <img data-src="assets/images/dome-arc-3.jpg" alt="" />
-    </div>
-    <div class="scene-inner" style="max-width: 1320px;">
-      <div class="row" style="align-items: flex-end; margin-bottom: 24px;">
-        <div class="col" style="flex: 1;">
-          <span class="label-elem reveal" style="color: var(--sand); display: block; margin-bottom: 12px;">Elements V · VI · VII</span>
-          <h3 class="title-md reveal" data-delay="200" style="max-width: 18ch;">
-            Threshold. Scale. Continuity.
-          </h3>
-        </div>
-        <div class="col" style="flex: 1;">
-          <p class="body-elem reveal" data-delay="400" style="opacity: 0.92;">
-            Built <em>with</em> the space, not upon it. Scale is negotiated with the body, not with the monument. There is no interruption between built and living — envelope, floor, vegetation: one single matter.
-          </p>
-        </div>
-      </div>
-      <div class="gallery-stage">
-        <div class="gallery-card gallery-card--a">
-          <img data-src="assets/images/dome-arc-3.jpg" alt="" />
-          <div class="marquee-item-tag">Threshold</div>
-        </div>
-        <div class="gallery-card gallery-card--b">
-          <img data-src="assets/images/dome-arc-4.jpg" alt="" />
-          <div class="marquee-item-tag">Scale</div>
-        </div>
-        <div class="gallery-card gallery-card--c">
-          <img data-src="assets/images/dome-arc-5.jpg" alt="" />
-          <div class="marquee-item-tag">Continuity</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ DETAILS · MARQUEE (horizontal scroll) ═══════════ -->
-  <section class="scene" data-scene="det-marquee" data-mood="dark" data-title="Details · gallery">
-    <div class="scene-bg">
-      <img data-src="assets/images/dome-arc-det.jpg" alt="" />
-    </div>
-    <div class="scene-inner" style="max-width: 100%; padding: 0;">
-      <div style="padding: 0 4vw; margin-bottom: 24px;">
-        <div class="section-mark reveal">
-          <span class="section-mark-line"></span>
-          <span>The detail defines the work</span>
-        </div>
-        <div class="row reveal" data-delay="200" style="margin-top: 20px; align-items: flex-end;">
-          <div class="col" style="flex: 1;">
-            <h3 class="title-md" style="max-width: 20ch;">
-              <em class="accent-sand">Details.</em>
-            </h3>
-          </div>
-          <div class="col" style="flex: 1.5;">
-            <p class="body-elem" style="opacity: 0.85;">
-              In this architecture the constructive detail is also the poetic gesture: the tree crosses through, the human hand remains visible, and ancestral technique converges into a single operation — <em>to weave rather than to stack.</em>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="marquee-stage reveal" data-delay="400">
-        <div class="marquee-track">
-          <div class="marquee-item">
-            <img data-src="assets/images/dome-arc-det.jpg" alt="" />
-            <div class="marquee-item-tag">I · The tree crosses through</div>
-          </div>
-          <div class="marquee-item">
-            <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
-            <div class="marquee-item-tag">II · Human hand visible</div>
-          </div>
-          <div class="marquee-item">
-            <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
-            <div class="marquee-item-tag">III · Constructive memory</div>
-          </div>
-          <!-- duplicate for seamless loop -->
-          <div class="marquee-item">
-            <img data-src="assets/images/dome-arc-det.jpg" alt="" />
-            <div class="marquee-item-tag">I · The tree crosses through</div>
-          </div>
-          <div class="marquee-item">
-            <img data-src="assets/images/dome-arc-det-2.jpg" alt="" />
-            <div class="marquee-item-tag">II · Human hand visible</div>
-          </div>
-          <div class="marquee-item">
-            <img data-src="assets/images/dome-arc-det-3.jpg" alt="" />
-            <div class="marquee-item-tag">III · Constructive memory</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ═══════════ THE EXPERIENCE ═══════════ -->
   <section class="scene" data-scene="sentir" data-mood="light" data-title="The spatial experience">
     <div class="scene-inner" data-align="left">
@@ -1939,11 +1921,11 @@ body.is-video-scene .veil::before { display: none; }
       </div>
 
       <div class="inheritance-missing reveal" data-delay="700">
-        <div class="row" style="align-items: center; gap: 32px;">
-          <div class="col" style="flex: 1;">
-            <div class="label accent-sand" style="margin-bottom: 16px;">Yet to be written in volume</div>
-            <h3 class="title-md" style="font-size: clamp(30px, 3.4vw, 48px);">
-              The <em class="accent-sand">sonic register.</em>
+        <div class="row" style="align-items: center; gap: clamp(40px, 5vw, 80px);">
+          <div class="col" style="flex: 1.3;">
+            <div class="label accent-sand" style="margin-bottom: 18px; letter-spacing: 0.34em;">Yet to be written in volume</div>
+            <h3 class="hero-title" style="font-size: clamp(54px, 8vw, 120px); line-height: 0.96; letter-spacing: -0.025em;">
+              The <em class="accent-sand">sonic<br/>register.</em>
             </h3>
           </div>
           <div class="col" style="flex: 1;">
@@ -1958,53 +1940,32 @@ body.is-video-scene .veil::before { display: none; }
 
   <!-- ═══════════ SAHAR CURATION · STORY ═══════════ -->
   <section class="scene" data-scene="sahar-story" data-mood="light" data-title="Sahar Curation">
-    <div class="nature-deco nature-deco--bl">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30 20 Q 60 50, 40 80 Q 20 120, 70 130 Q 120 140, 90 90 Q 60 60, 110 40 Q 160 20, 140 80 Q 130 130, 80 170" stroke-linecap="round"/>
-        <circle cx="110" cy="40" r="2"/>
-      </svg>
-    </div>
     <div class="scene-inner" data-align="left">
-      <div class="section-mark reveal">
-        <span class="section-mark-line"></span>
-        <span>Curation</span>
-      </div>
-      <h2 class="title-md reveal" data-delay="200" style="margin-top: 24px; max-width: 22ch;">
-        <em class="accent-teal">Sahar Farmanfarmaian.</em>
-      </h2>
-      <div class="row reveal" data-delay="400" style="margin-top: 36px; gap: clamp(40px, 5vw, 80px);">
-        <div class="col" style="flex: 1.1;">
-          <p class="body-lg" style="color: var(--text-on-light);">
+      <div class="row" style="gap: clamp(40px, 5vw, 80px); align-items: center;">
+        <div class="col" style="flex: 1.3;">
+          <div class="section-mark reveal">
+            <span class="section-mark-line"></span>
+            <span>Curation</span>
+          </div>
+          <h2 class="title-md reveal" data-delay="200" style="margin-top: 18px; max-width: 22ch;">
+            <em class="accent-teal">Sahar Farmanfarmaian.</em>
+          </h2>
+          <p class="body-lg reveal" data-delay="400" style="margin-top: 24px; color: var(--text-on-light);">
             Descendant of the Qajar dynasty, Sahar has lived in exile for decades — a citizen of the world. Switzerland. The United Kingdom. Goa. New York. Ibiza. Portugal.
           </p>
-          <p class="body-lg" style="margin-top: 20px; color: var(--text-on-light);">
-            Her true home and sanctuary — the land that received her — is <strong>Alto Paraíso, Brazil</strong>, where she has lived for twenty years. There she created <strong>Noor Sanctuary</strong>: a living altar that breathes healing and light, blessed by indigenous elders and medicine carriers from many traditions.
+          <p class="body-lg reveal" data-delay="500" style="margin-top: 16px; color: var(--text-on-light);">
+            Her true home — the land that received her — is <strong>Alto Paraíso, Brazil</strong>, where she has lived for twenty years. There she created <strong>Noor Sanctuary</strong>: a living altar that breathes healing and light, blessed by indigenous elders and medicine carriers from many traditions.
           </p>
-          <p class="body-lg" style="margin-top: 20px; color: var(--text-on-light);">
+          <p class="body-lg reveal" data-delay="600" style="margin-top: 16px; color: var(--text-on-light);">
             For years Sahar has been creating altars across Europe — for festivals, gatherings, and large conferences. Her practice is grounded in <em>sacred geometry, numerology, astrology, lunar cycles</em> and <em>sound frequencies.</em>
           </p>
-          <p class="body-lg" style="margin-top: 20px; color: var(--text-on-light-mute);">
-            Through Sahar Curation she brings together the most renowned and legitimate therapists, healers and craftspeople of her global network. The sound temple has long been the design she most yearned to bring into the world. Cidade Matarazzo is its place.
+          <p class="body-lg reveal" data-delay="700" style="margin-top: 16px; color: var(--text-on-light-mute);">
+            Through Sahar Curation she brings together the most renowned therapists, healers and craftspeople of her global network. The sound temple has long been the design she most yearned to bring into the world. Cidade Matarazzo is its place.
           </p>
         </div>
-        <div class="col" style="flex: 0.8;">
-          <div class="specs-row" style="margin-top: 0; grid-template-columns: 1fr; border-color: var(--hairline-light);">
-            <div class="spec-cell" style="border: none; border-bottom: 1px solid var(--hairline-light); padding-bottom: 16px; margin-bottom: 16px;">
-              <div class="label" style="color: var(--text-on-light-mute);">Heritage</div>
-              <div class="spec-value">Qajar dynasty</div>
-            </div>
-            <div class="spec-cell" style="border: none; border-bottom: 1px solid var(--hairline-light); padding-bottom: 16px; margin-bottom: 16px;">
-              <div class="label" style="color: var(--text-on-light-mute);">Sanctuary</div>
-              <div class="spec-value">Noor · Alto Paraíso</div>
-            </div>
-            <div class="spec-cell" style="border: none; border-bottom: 1px solid var(--hairline-light); padding-bottom: 16px; margin-bottom: 16px;">
-              <div class="label" style="color: var(--text-on-light-mute);">Practice</div>
-              <div class="spec-value">Sacred altars · curation</div>
-            </div>
-            <div class="spec-cell" style="border: none; padding-bottom: 0;">
-              <div class="label" style="color: var(--text-on-light-mute);">Network</div>
-              <div class="spec-value">Azulik · Svaram · global</div>
-            </div>
+        <div class="col" style="flex: 1;">
+          <div class="photo-card reveal" data-delay="300" style="max-width: 460px; margin-left: auto; aspect-ratio: 2/3; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.45), 0 0 0 1px rgba(26, 31, 27, 0.08);">
+            <img data-src="assets/images/sahar.jpg" alt="" />
           </div>
         </div>
       </div>
