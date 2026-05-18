@@ -1431,12 +1431,81 @@ body.is-video-scene .veil::before { display: none; }
 }
 
 /* ─────────────────────────────────────────────────────────
-   MOBILE (≤ 640px) — full responsive treatment
+   MOBILE (≤ 640px) — vertical scroll, no slide navigation
 ───────────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
-  /* Scene padding tighter */
-  .scene { padding: 76px 0 86px; }
+  /* Allow native vertical scroll on document */
+  html, body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Stage flows naturally (no fixed positioning, no slide stack) */
+  .stage {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    perspective: none !important;
+  }
+
+  /* Each scene becomes a tall, naturally-flowing section */
+  .scene {
+    position: relative !important;
+    inset: auto !important;
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 1 !important;
+    min-height: 100vh;
+    height: auto !important;
+    width: 100%;
+    transition: none !important;
+    page-break-inside: avoid;
+    padding: 88px 0 64px !important;
+  }
+
+  /* Subtle separator between scenes */
+  .scene + .scene { border-top: 1px solid var(--hairline-dark); }
+  .scene[data-mood="light"] { background: var(--pearl); }
+  .scene[data-mood="dark"], .scene[data-mood="image"] { background: var(--forest-black); }
+
+  /* Hide visual chrome that no longer applies on mobile */
+  .arrow-nav { display: none !important; }
+  .hud-bottom { display: none !important; }
+  .operator-hint { display: none !important; }
+  .mist-stage { display: none !important; }
+  .veil { display: none !important; }
+
+  /* HUD top becomes a sticky thin bar with gradient */
+  .hud-top {
+    position: fixed !important;
+    top: 0;
+    background: linear-gradient(180deg, rgba(15,20,16,0.92) 0%, rgba(15,20,16,0.6) 60%, rgba(15,20,16,0) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    opacity: 1 !important;
+    padding: 14px 16px 24px !important;
+  }
+  body[data-current-mood="light"] .hud-top {
+    background: linear-gradient(180deg, rgba(237,232,222,0.92) 0%, rgba(237,232,222,0.6) 60%, rgba(237,232,222,0) 100%);
+  }
+  .hud-progress-counter { font-size: 9px; }
+  .hud-mark span:not(.hud-mark-dot) { font-size: 9px; }
+
+  /* Scene-bg disabled on mobile (saves GPU during scroll) */
+  .scene-bg { display: none !important; }
+  .photo-zone--full::after { background: linear-gradient(180deg, rgba(15,20,16,0.4) 0%, rgba(15,20,16,0.2) 50%, rgba(15,20,16,0.5) 100%); }
+
+  /* Photo-zone full-bleed scenes need contained height */
+  .photo-zone--full { position: relative !important; height: 70vh; margin: 24px -6vw 0; }
+
+  /* Scene inner */
   .scene-inner { padding: 0 6vw; width: 100%; }
 
   /* HUD slimmer */
@@ -2767,10 +2836,96 @@ body.is-video-scene .veil::before { display: none; }
     showScene(mainFlow, mainFlowReturnIndex);
   }
 
+  const MOBILE_BREAKPOINT = 640;
+  const isMobile = () => window.innerWidth <= MOBILE_BREAKPOINT;
+
+  function initMobileMode() {
+    // 1. Activate ALL main-flow scenes immediately so reveals + images render
+    mainFlow.forEach(s => {
+      s.classList.add('is-active');
+      lazyLoadMedia(s);
+    });
+
+    // 2. Eager-load all videos (mute + ready for play)
+    document.querySelectorAll('video[data-src]').forEach(v => {
+      if (!v.dataset.loaded) {
+        v.src = v.dataset.src;
+        v.dataset.loaded = "true";
+      }
+      v.muted = true;
+    });
+
+    // 3. Set initial mood from first scene
+    const firstScene = mainFlow[0];
+    document.body.dataset.currentMood = firstScene.dataset.mood || 'dark';
+    document.body.classList.toggle('is-light-active', firstScene.dataset.mood === 'light');
+    updateHud(firstScene);
+
+    // 4. Optional: IntersectionObserver for HUD + video play/pause (if supported)
+    if (typeof IntersectionObserver !== 'undefined') {
+      // Mood + HUD switches as user scrolls
+      const moodObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const scene = entry.target;
+            const mood = scene.dataset.mood || 'dark';
+            document.body.dataset.currentMood = mood;
+            document.body.classList.toggle('is-light-active', mood === 'light');
+            updateHud(scene);
+          }
+        });
+      }, { rootMargin: '-30% 0px -50% 0px', threshold: 0 });
+      mainFlow.forEach(s => moodObs.observe(s));
+
+      // Videos play only when in viewport
+      const videoObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const v = entry.target;
+          if (entry.isIntersecting) {
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('video').forEach(v => videoObs.observe(v));
+    } else {
+      // Fallback: just play all videos
+      document.querySelectorAll('video').forEach(v => v.play().catch(() => {}));
+    }
+
+    // 5. Fallback scroll listener (in case observer fails) — updates HUD
+    let scrollRaf = null;
+    window.addEventListener('scroll', () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = null;
+        const midpoint = window.scrollY + window.innerHeight / 2;
+        for (const scene of mainFlow) {
+          const top = scene.offsetTop;
+          const bottom = top + scene.offsetHeight;
+          if (midpoint >= top && midpoint < bottom) {
+            const mood = scene.dataset.mood || 'dark';
+            if (document.body.dataset.currentMood !== mood) {
+              document.body.dataset.currentMood = mood;
+              document.body.classList.toggle('is-light-active', mood === 'light');
+              updateHud(scene);
+            }
+            break;
+          }
+        }
+      });
+    }, { passive: true });
+  }
+
   startBtn.addEventListener('click', () => {
     promptScreen.classList.add('is-hidden');
     document.body.classList.add('is-running');
-    setTimeout(() => { showScene(mainFlow, 0); }, 300);
+    if (isMobile()) {
+      setTimeout(initMobileMode, 300);
+    } else {
+      setTimeout(() => { showScene(mainFlow, 0); }, 300);
+    }
   });
 
   window.addEventListener('keydown', (e) => {
@@ -2778,6 +2933,7 @@ body.is-video-scene .veil::before { display: none; }
       if (e.key === 'Enter' || e.key === ' ') startBtn.click();
       return;
     }
+    if (isMobile()) return; // native scroll on mobile
     switch (e.key) {
       case 'ArrowRight':
       case ' ':
@@ -2806,6 +2962,7 @@ body.is-video-scene .veil::before { display: none; }
   let scrollTimeout = null;
   window.addEventListener('wheel', (e) => {
     if (!promptScreen.classList.contains('is-hidden')) return;
+    if (isMobile()) return; // native scroll on mobile
     if (isTransitioning) return;
     if (scrollTimeout) return;
     if (Math.abs(e.deltaY) < 30) return;
@@ -2814,6 +2971,7 @@ body.is-video-scene .veil::before { display: none; }
   }, { passive: true });
 
   stage.addEventListener('click', (e) => {
+    if (isMobile()) return; // no click-to-advance on mobile
     if (e.target.closest('button')) return;
     if (e.target.closest('.path-trigger')) return;
     if (e.target.closest('.path-card')) return;
