@@ -1469,6 +1469,9 @@ body.is-video-scene .veil::before { display: none; }
     padding: 88px 0 64px !important;
   }
 
+  /* Hide pathway scenes on mobile (they're not part of the linear flow) */
+  .scene[data-pathway] { display: none !important; }
+
   /* Subtle separator between scenes */
   .scene + .scene { border-top: 1px solid var(--hairline-dark); }
   .scene[data-mood="light"] { background: var(--pearl); }
