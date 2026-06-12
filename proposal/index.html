@@ -161,46 +161,34 @@ body {
   color: var(--ink);
 }
 
-/* ─────────── INVESTMENT (numerological centerpiece) ─────────── */
+/* ─────────── INVESTMENT (discreet, left-aligned) ─────────── */
 
 .investment {
-  text-align: center;
-  padding: 72px 20px 64px;
-  background: linear-gradient(180deg, transparent 0%, rgba(212, 180, 122, 0.08) 50%, transparent 100%);
-  position: relative;
+  padding: 8px 0 0;
 }
 
-.investment-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-bottom: 32px;
-}
-
-.investment-row {
-  display: inline-flex;
+.investment-figure {
+  display: flex;
   align-items: baseline;
-  gap: 10px;
-  position: relative;
+  gap: 2px;
+  margin-bottom: 24px;
 }
 
 .investment-currency {
   font-family: 'Italiana', 'Cormorant Garamond', serif;
   font-weight: 400;
-  font-size: clamp(18px, 2.4vw, 26px);
+  font-size: clamp(15px, 1.8vw, 19px);
   color: var(--gold-deep);
   line-height: 1;
+  margin-right: 4px;
 }
 
 .investment-number {
   font-family: 'Italiana', 'Cormorant Garamond', serif;
   font-weight: 400;
-  font-size: clamp(46px, 6.4vw, 72px);
-  line-height: 0.95;
-  letter-spacing: -0.005em;
+  font-size: clamp(30px, 3.6vw, 40px);
+  line-height: 1;
+  letter-spacing: 0.005em;
   color: var(--gold-deep);
 }
 
@@ -208,23 +196,19 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 400;
-  font-size: 19px;
+  font-size: 16px;
   color: var(--ink-soft);
-  margin-top: 18px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 .investment-meaning {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.7;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.72;
   color: var(--ink-soft);
-  margin-top: 36px;
-  max-width: 44ch;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 58ch;
 }
 
 .investment-meaning em {
@@ -442,8 +426,9 @@ body {
   .investment { padding: 48px 0; }
   .header-title { font-size: clamp(28px, 8vw, 36px); }
   .narrative, .included { font-size: 16px; }
-  .investment-number { font-size: clamp(40px, 11vw, 56px); }
-  .investment-currency { font-size: clamp(16px, 4.5vw, 22px); }
+  .investment-number { font-size: clamp(28px, 8vw, 36px); }
+  .investment-currency { font-size: clamp(14px, 4vw, 17px); }
+  .investment-figure { flex-wrap: wrap; }
   .sinal { grid-template-columns: 1fr; gap: 16px; }
   .sinal-amount { font-size: clamp(28px, 8vw, 40px); }
   .closing-photo-frame { max-width: 100%; }
@@ -510,17 +495,16 @@ body {
     </div>
   </section>
 
-  <!-- ─── THE INVESTMENT (numerological centerpiece) ─── -->
+  <!-- ─── THE INVESTMENT ─── -->
   <section class="section">
+    <div class="section-label">My Monthly Commitment</div>
     <div class="investment">
-      <div class="investment-label">My Monthly Commitment</div>
-      <div class="investment-row">
-        <span class="investment-currency">€</span>
-        <span class="investment-number">8,800</span>
+      <div class="investment-figure">
+        <span class="investment-currency">€</span><span class="investment-number">8,800</span>
+        <span class="investment-period">&nbsp;/ month · three months</span>
       </div>
-      <div class="investment-period">per month &nbsp;·&nbsp; three months</div>
       <p class="investment-meaning">
-        Eight is the symbol of <em>infinity</em>. Doubled, it becomes the breath of <em>abundance</em> — a Sufi multiple of 110, the number of return. This is the figure I work with. This is the figure I trust.
+        Eight is the symbol of <em>infinity</em>. Doubled, it becomes the breath of <em>abundance</em> — a Sufi multiple of 110, the number of return. This is a figure I trust will bring prosperity to the giver and the receiver.
       </p>
     </div>
   </section>
@@ -530,7 +514,7 @@ body {
     <div class="section-label">What This Holds</div>
     <div class="included">
       <p>
-        Within this monthly commitment, the project is held in its entirety — from <strong>creative direction and project management</strong> on site at Cidade Matarazzo, to the <strong>activation of altars and the harmonization of the space</strong> through ceremony, sound, smoke and intention.
+        Within this monthly commitment, the project is held in its entirety — from <strong>creative direction and project management</strong> on site at Cidade Matarazzo, to the <strong>activation of altars and the harmonization of the space</strong> through ceremony, sound, copal and intention.
       </p>
       <p>
         It includes the <strong>curation of musicians, healers and soundscapes</strong> — the lineup of artists who will inhabit the dome — and the careful selection of the <strong>crystals, gongs, textiles and interior elements</strong> that bring the space alive. Every object placed is part of the score.
